@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="DKG-BackEnd:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="DKGBackend.war">
+      <element id="artifact" artifact-name="DKG-BackEnd:war exploded" />
+    </root>
+  </artifact>
+</component>

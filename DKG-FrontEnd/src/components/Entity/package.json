@@ -1,0 +1,6 @@
+{
+  "name": "Entity",
+  "version": "1.0.0",
+  "main": "./Entity.js",
+  "private": true
+}
