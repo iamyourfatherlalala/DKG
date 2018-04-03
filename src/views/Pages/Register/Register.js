@@ -44,7 +44,7 @@ class Register extends Component {
                   </InputGroup>
                   <Button color="success" block>Create Account</Button>
                 </CardBody>
-                {/* <CardFooter className="p-4">
+                <CardFooter className="p-4">
                   <Row>
                     <Col xs="12" sm="6">
                       <Button className="btn-facebook" block><span>facebook</span></Button>
@@ -53,7 +53,7 @@ class Register extends Component {
                       <Button className="btn-twitter" block><span>twitter</span></Button>
                     </Col>
                   </Row>
-                </CardFooter> */}
+                </CardFooter>
               </Card>
             </Col>
           </Row>

@@ -39,6 +39,7 @@
     "react": "16.2.0",
     "react-chartjs-2": "2.7.0",
     "react-dom": "16.2.0",
+    "react-router": "^4.2.0",
     "react-router-dom": "4.2.2",
     "react-transition-group": "2.2.1",
     "reactstrap": "5.0.0-beta",
@@ -46,7 +47,7 @@
   },
   "scripts": {
     "dev": "webpack -d --progress --watch --profile --json > compilation-stats.json --env.dev",
-    "start": "webpack-dev-server --progress --color --inline --env.dev",
+    "start": "webpack-dev-server --hot --progress --color --inline --env.dev",
     "build": "webpack -p --progress --env.prod",
     "clean": "rimraf ./build"
   },

@@ -47,21 +47,21 @@ class Sidebar extends Component {
     const props = this.props;
 
     // badge addon to NavItem
-    const badge = (badge) => {
-      if (badge) {
-        const classes = classNames( badge.class );
-        return (<Badge className={ classes } color={ badge.variant }>{ badge.text }</Badge>)
-      }
-    };
+      const badge = (badge) => {
+          if (badge) {
+              const classes = classNames( badge.class );
+              return (<Badge className={ classes } color={ badge.variant }>{ badge.text }</Badge>)
+          }
+      };
 
-    // simple wrapper for nav-title item
-    const wrapper = item => { return (item.wrapper && item.wrapper.element ? (React.createElement(item.wrapper.element, item.wrapper.attributes, item.name)): item.name ) };
+      // simple wrapper for nav-title item
+      const wrapper = item => { return (item.wrapper && item.wrapper.element ? (React.createElement(item.wrapper.element, item.wrapper.attributes, item.name)): item.name ) };
 
-    // nav list section title
-    const title =  (title, key) => {
-      const classes = classNames( 'nav-title', title.class);
-      return (<li key={key} className={ classes }>{wrapper(title)} </li>);
-    };
+      // nav list section title
+      const title =  (title, key) => {
+          const classes = classNames( 'nav-title', title.class);
+          return (<li key={key} className={ classes }>{wrapper(title)} </li>);
+      };
 
     // nav list divider
     const divider = (divider, key) => {

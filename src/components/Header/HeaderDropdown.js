@@ -6,12 +6,13 @@ import {
   DropdownToggle,
   Dropdown
 } from 'reactstrap';
+import { browserHistory } from 'react-router'
+import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
 
 class HeaderDropdown extends Component {
 
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false
@@ -43,7 +44,7 @@ class HeaderDropdown extends Component {
           <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
           <DropdownItem divider/>
           <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-          <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+          <DropdownItem onClick={() => this.props.history.push('/login')}><i className="fa fa-lock"></i> Logout</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );
@@ -57,4 +58,4 @@ class HeaderDropdown extends Component {
   }
 }
 
-export default HeaderDropdown;
+export default withRouter(HeaderDropdown);

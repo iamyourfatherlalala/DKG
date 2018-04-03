@@ -1,228 +1,55 @@
 export default {
   items: [
-    {
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW'
-      }
-    },
-    {
-      title: true,
-      name: 'Theme',
-      wrapper: {            // optional wrapper object
-        element: '',        // required valid HTML5 element tag
-        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      {
+          title: true,
+          name: '功能',
+          wrapper: {
+              element: '',
+              attributes: {}
+          },
       },
-      class: ''             // optional class names space delimited list for title item ex: "text-center"
-    },
-    {
-      name: 'Colors',
-      url: '/theme/colors',
-      icon: 'icon-drop',
-    },
-    {
-      name: 'Typography',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
-    },
-    {
-      title: true,
-      name: 'Components',
-      wrapper: {
-        element: '',
-        attributes: {}
+      {
+          divider: true
       },
-    },
-    {
-      name: 'Base',
-      url: '/base',
-      icon: 'icon-puzzle',
-      children: [
-        {
-          name: 'Breadcrumbs',
-          url: '/base/breadcrumbs',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Cards',
-          url: '/base/cards',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Carousels',
-          url: '/base/carousels',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Collapses',
-          url: '/base/collapses',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Dropdowns',
-          url: '/base/dropdowns',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Forms',
-          url: '/base/forms',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Jumbotrons',
-          url: '/base/jumbotrons',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'List groups',
-          url: '/base/list-groups',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Navs',
-          url: '/base/navs',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Paginations',
-          url: '/base/paginations',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Popovers',
-          url: '/base/popovers',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Progress Bar',
-          url: '/base/progress-bar',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Switches',
-          url: '/base/switches',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Tables',
-          url: '/base/tables',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Tabs',
-          url: '/base/tabs',
-          icon: 'icon-puzzle'
-        },
-        {
-          name: 'Tooltips',
-          url: '/base/tooltips',
-          icon: 'icon-puzzle'
-        }
-      ]
-    },
-    {
-      name: 'Buttons',
-      url: '/buttons',
-      icon: 'icon-cursor',
-      children: [
-        {
-          name: 'Buttons',
-          url: '/buttons/buttons',
-          icon: 'icon-cursor'
-        },
-        {
-          name: 'Button dropdowns',
-          url: '/buttons/button-dropdowns',
-          icon: 'icon-cursor'
-        },
-        {
-          name: 'Button groups',
-          url: '/buttons/button-groups',
-          icon: 'icon-cursor'
-        },
-        {
-          name: 'Social Buttons',
-          url: '/buttons/social-buttons',
-          icon: 'icon-cursor'
-        }
-      ]
-    },
-    {
-      name: 'Charts',
-      url: '/charts',
-      icon: 'icon-pie-chart'
-    },
-    {
-      name: 'Icons',
-      url: '/icons',
-      icon: 'icon-star',
-      children: [
-        {
-          name: 'Flags',
-          url: '/icons/flags',
-          icon: 'icon-star',
-          badge: {
-            variant: 'success',
-            text: 'NEW'
-          }
-        },
-        {
-          name: 'Font Awesome',
-          url: '/icons/font-awesome',
-          icon: 'icon-star',
-          badge: {
-            variant: 'secondary',
-            text: '4.7'
-          }
-        },
-        {
-          name: 'Simple Line Icons',
-          url: '/icons/simple-line-icons',
+      {
+        name: '术语管理',
+        url: '/concept',
+        icon: 'icon-drop',
+      },
+      {
+          divider: true
+      },
+      {
+          name: '系统管理',
+          icon: 'icon-puzzle',
+          children: [
+              {
+                  name: '领域专家管理',
+                  url: '/domainExpert',
+                  icon: 'icon-pencil'
+              }
+          ]
+      },
+      {
+          divider: true
+      },
+      {
+          name: '模式管理',
+          url: '/scheme',
+          icon: 'icon-pie-chart',
+      },
+      {
+          divider: true
+      },
+      {
+          name: '实体管理',
+          url: '/entity',
           icon: 'icon-star'
-        }
-      ]
-    },
-    {
-      name: 'Notifications',
-      url: '/notifications',
-      icon: 'icon-bell',
-      children: [
-        {
-          name: 'Alerts',
-          url: '/notifications/alerts',
-          icon: 'icon-bell'
-        },
-        {
-          name: 'Badges',
-          url: '/notifications/badges',
-          icon: 'icon-bell'
-        },
-        {
-          name: 'Modals',
-          url: '/notifications/modals',
-          icon: 'icon-bell'
-        },
-      ]
-    },
-    {
-      name: 'Widgets',
-      url: '/widgets',
-      icon: 'icon-calculator',
-      badge: {
-        variant: 'info',
-        text: 'NEW'
-      }
-    },
-    {
-      divider: true
-    },
-    {
-      title: true,
-      name: 'Extras'
-    },
+      },
+      {
+          divider: true
+      },
+      /*
     {
       name: 'Pages',
       url: '/pages',
@@ -249,19 +76,6 @@ export default {
           icon: 'icon-star'
         }
       ]
-    },
-    {
-      name: 'Download CoreUI',
-      url: 'http://coreui.io/react/',
-      icon: 'icon-cloud-download',
-      class: 'mt-auto',
-      variant: 'success'
-    },
-    {
-      name: 'Try CoreUI PRO',
-      url: 'http://coreui.io/pro/react/',
-      icon: 'icon-layers',
-      variant: 'danger'
-    }
+    } */
   ]
 };

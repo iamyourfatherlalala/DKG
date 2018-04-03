@@ -15,6 +15,11 @@ import Typography from '../../views/Theme/Typography/';
 import Charts from '../../views/Charts/';
 import Widgets from '../../views/Widgets/';
 
+import Concept from '../../components/Concept/';
+import DomainExpert  from '../../components/DomainExpert/';
+import Scheme from '../../components/Scheme/'
+import Entity from '../../components/Entity/'
+
 // Base
 import Cards from '../../views/Base/Cards/';
 import Forms from '../../views/Base/Forms/';
@@ -61,6 +66,10 @@ class Full extends Component {
             <Breadcrumb/>
             <Container fluid>
               <Switch>
+                <Route path="/concept" name = "术语管理" component={Concept}/>
+                <Route path="/domainExpert" name="领域专家管理" component={DomainExpert}/>
+                <Route path="/entity" name="实体管理" component={Entity}/>
+                <Route path="/scheme" name="模式管理" component={Scheme}/>
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
                 <Route path="/theme/colors" name="Colors" component={Colors}/>
                 <Route path="/theme/typography" name="Typography" component={Typography}/>

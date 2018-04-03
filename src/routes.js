@@ -1,5 +1,9 @@
 const routes = {
-  '/': 'Home',
+  '/': '主页',
+  '/concept': '术语管理',
+  '/domainExpert': '领域专家管理',
+  '/scheme': '模式管理',
+  '/entity': '实体管理',
   '/base': 'Base',
   '/base/cards': 'Cards',
   '/base/forms': 'Forms',
