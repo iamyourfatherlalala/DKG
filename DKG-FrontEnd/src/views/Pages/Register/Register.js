@@ -10,29 +10,29 @@ class Register extends Component {
             <Col md="6">
               <Card className="mx-4">
                 <CardBody className="p-4">
-                  <h1>Register</h1>
-                  <p className="text-muted">Create your account</p>
+                  <h1>注册</h1>
+                  <p className="text-muted">注册新账号</p>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="icon-user"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input type="text" placeholder="Username"/>
+                    <Input type="text" placeholder="用户名"/>
                   </InputGroup>
-                  <InputGroup className="mb-3">
+                  {/* <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>@</InputGroupText>
                     </InputGroupAddon>
-                    <Input type="text" placeholder="Email"/>
-                  </InputGroup>
+                    <Input type="text" placeholder="邮箱"/>
+                  </InputGroup> */}
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="icon-lock"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input type="password" placeholder="Password"/>
+                    <Input type="password" placeholder="密码"/>
                   </InputGroup>
                   <InputGroup className="mb-4">
                     <InputGroupAddon addonType="prepend">
@@ -40,19 +40,19 @@ class Register extends Component {
                         <i className="icon-lock"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input type="password" placeholder="Repeat password"/>
+                    <Input type="password" placeholder="再次确认密码"/>
                   </InputGroup>
-                  <Button color="success" block>Create Account</Button>
+                  <Button color="success" block>创建账号</Button>
                 </CardBody>
                 <CardFooter className="p-4">
-                  <Row>
+                  {/* <Row>
                     <Col xs="12" sm="6">
                       <Button className="btn-facebook" block><span>facebook</span></Button>
                     </Col>
                     <Col xs="12" sm="6">
                       <Button className="btn-twitter" block><span>twitter</span></Button>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </CardFooter>
               </Card>
             </Col>
