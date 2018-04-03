@@ -1,0 +1,17 @@
+
+.idea/
+out/
+target/
+
+*.bat
+classes/
+libs/
+
+.classpath
+.project
+.settings/
+
+.DS_Store
+*.iml
+webapp/
+backEnd/src/main/resources/application.properties
