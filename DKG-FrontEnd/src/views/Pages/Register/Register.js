@@ -42,7 +42,7 @@ class Register extends Component {
                     </InputGroupAddon>
                     <Input type="password" placeholder="再次确认密码"/>
                   </InputGroup>
-                  <Button color="success" block>创建账号</Button>
+                  <Button color="success" block onClick={()=> this.props.history.push('/content')}>创建账号</Button>
                 </CardBody>
                 <CardFooter className="p-4">
                   {/* <Row>
