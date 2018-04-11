@@ -89,7 +89,16 @@ module.exports = (env = {}) => {
           options: {
             name: './fonts/[name].[hash].[ext]'
           }
-        }]
+        },
+        // {      
+        //   test: /\.jsx?$/,
+        //   loader: 'babel',
+        //   include: APP_PATH,
+        //   query: {
+        //     presets: ['es2015', 'react', 'stage-1']
+        //   }
+        // }
+      ]
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),

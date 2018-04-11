@@ -17,8 +17,10 @@ import Widgets from '../../views/Widgets/';
 
 import Concept from '../../components/Concept/';
 import DomainExpert  from '../../components/DomainExpert/';
-import Scheme from '../../components/Scheme/'
-import Entity from '../../components/Entity/'
+import Scheme from '../../components/Scheme/';
+import Entity from '../../components/Entity/';
+
+import AuthorityManagement from '../../components/AuthorityManagement/';
 
 // Base
 import Cards from '../../views/Base/Cards/';
@@ -70,6 +72,7 @@ class Full extends Component {
                 <Route path="/domainExpert" name="领域专家管理" component={DomainExpert}/>
                 <Route path="/entity" name="实体管理" component={Entity}/>
                 <Route path="/scheme" name="模式管理" component={Scheme}/>
+                <Route path="/authorityManagement" name="权限管理" component={AuthorityManagement}/>
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
                 <Route path="/theme/colors" name="Colors" component={Colors}/>
                 <Route path="/theme/typography" name="Typography" component={Typography}/>

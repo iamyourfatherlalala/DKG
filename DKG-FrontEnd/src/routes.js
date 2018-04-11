@@ -1,5 +1,6 @@
 const routes = {
   '/': '主页',
+  '/authorityManagement': '权限管理',
   '/concept': '术语管理',
   '/domainExpert': '领域专家管理',
   '/scheme': '模式管理',

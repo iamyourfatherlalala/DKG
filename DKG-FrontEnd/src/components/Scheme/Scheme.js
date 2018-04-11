@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     Badge,
     Button,
@@ -16,12 +16,61 @@ import {
     Label,
     Input
 } from 'reactstrap';
+// import ReactTable from 'react-table';
+// import 'react-table/react-table.css';
+// import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table';
+import DeleteRow from '../DeleteRow';
+//import BootstrapTable from 'react-bootstrap-table-next';
+import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table-next';
+// import RemoteStoreDeleteRow from './remote-store-delete-row';
+
+let data = [
+  {   
+      "id": "0",
+      "fromConcept": "公司",
+      "relation": "CEO",
+      "toConcept": "人"
+  },
+  {
+      "id": "1",
+      "fromConcept": "公司",
+      "relation": "控股子公司",
+      "toConcept": "公司"
+  },
+  {
+      "id": "2",
+      "fromConcept": "人",
+      "relation": "创建",
+      "toConcept": "公司"
+  }
+]
+
+// const selectRow = {
+//   mode: 'radio',
+//   clickToSelect: true
+// };
+
+const columns = [
+  {
+    dataField: 'id',
+    text: 'ID'
+  }, {
+  dataField: 'fromConcept',
+  text: '概念'
+}, {
+  dataField: 'relation',
+  text: '关系'
+}, {
+  dataField: 'toConcept',
+  text: '概念'
+}];
 
 class Scheme extends Component {
         constructor(props) {
         super(props);
         this.state = {
-            // exam_conditions : [],
+             AllRelations : data,
+ 
          }
         this.getAllRelations = this.getAllRelations.bind(this);
         this.getRelationsByConcept = this.getRelationsByConcept.bind(this);
@@ -32,15 +81,56 @@ class Scheme extends Component {
         // }
 
        getAllRelations() {
-          
+        let url = `http://localhost:8080/relation`;
+         fetch(url)
+         .then(function(response) {
+             if (!response.ok) {
+                 throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                response.json().then((data) => {
+                     this.setState({ AllRelations: data });
+                    // alert(this.state.exam_conditions[0].id);
+                });
+             }).catch((error) => {
+                 console.log(error);
+                });
        }
 
        getRelationsByConcept() {
-
+        let url = `http://localhost:8080/relation`;
+        fetch(url)
+        .then(function(response) {
+            if (!response.ok) {
+                throw Error(response.statusText);
+               }
+               return response;
+           }).then((response) => {
+               response.json().then((data) => {
+                    this.setState({ AllRelations: data });
+                   // alert(this.state.exam_conditions[0].id);
+               });
+            }).catch((error) => {
+                console.log(error);
+               });
     }
 
+       onDeleteRow(row) {
+           data = data.filter((product) => {
+           return product.id !== row[0];
+      });
+      
+         this.setState({
+          AllRelations: data
+      });
+    }
 
     render() {
+      
+      const { AllRelations } = this.state;
+
+
         return (
             <div>
             {/* <div>
@@ -75,78 +165,32 @@ class Scheme extends Component {
               </CardBody>
             </Card>
 
-         
+
              
+             {/* <BootstrapTable
+            keyField='id'
+            data={ AllRelations }
+            remote={ true }
+            deleteRow={ true }
+            columns={ columns }
+            selectRow={ { mode: 'radio' } }
+            options={ { onDeleteRow: this.onDeleteRow } }
+            /> */}
          
+      <div>
+        <div className='col-md-offset-1 col-md-8'>
+          <div className='panel panel-default'>
+            <div className='panel-heading'>Remote Delete Row Example</div>
+            <div className='panel-body'>
+            {/* <RemoteStoreDeleteRow /> */}
+            <DeleteRow onDeleteRow={ this.onDeleteRow.bind(this) } { ...this.state } />
+            </div>
+          </div>
+        </div>
+        </div>
+            {/* <DeleteRow onDeleteRow={ this.onDeleteRow.bind(this) } { ...this.state } /> */}
 
-
-           
-
-            <Col xs="12" lg="12">
-            <Card>
-              <CardHeader>
-                <i className="fa fa-align-justify"></i> Simple Table
-              </CardHeader>
-              <CardBody>
-                <Table responsive>
-                  <thead>
-                  <tr>
-                    <th>概念</th>
-                    <th>关系</th>
-                    <th>概念</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Samppa Nori</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                  </tr>
-                  <tr>
-                    <td>Estavan Lykos</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                  </tr>
-                  <tr>
-                    <td>Chetan Mohamed</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                  </tr>
-                  <tr>
-                    <td>Derick Maximinus</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                  </tr>
-                  <tr>
-                    <td>Friderik Dávid</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                  </tr>
-                  </tbody>
-                </Table>
-                <Pagination>
-                  <PaginationItem>
-                    <PaginationLink previous href="#"></PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem active>
-                    <PaginationLink href="#">1</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">4</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink next href="#"></PaginationLink>
-                  </PaginationItem>
-                </Pagination>
-              </CardBody>
-            </Card>
-          </Col>
+            
             </div>
         )
     }
