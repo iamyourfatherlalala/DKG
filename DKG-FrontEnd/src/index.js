@@ -14,6 +14,8 @@ import '../scss/style.scss'
 // Temp fix for reactstrap
 import '../scss/core/_dropdown-menu-right.scss'
 
+import 'semantic-ui-css/semantic.min.css';
+
 // Containers
 import Full from './containers/Full/'
 

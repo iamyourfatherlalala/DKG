@@ -33,11 +33,33 @@ export default {
       {
           divider: true
       },
-      {
-          name: '模式管理',
-          url: '/scheme',
-          icon: 'icon-pie-chart',
-      },
+    //   {
+    //       name: '模式管理',
+    //       url: '/scheme',
+    //       icon: 'icon-pie-chart',
+    //       children: [
+    //         {
+    //             name: '获取所有关系',
+    //             url: '/scheme/all-relations',
+    //             icon: 'icon-pencil',
+    //         },
+    //         {
+    //             name: '根据概念名获取关系',
+    //             url: '/scheme/query-by-concept',
+    //             icon: 'icon-pencil',
+    //         },
+    //         {
+    //             name: '添加关系',
+    //             url: '/scheme/add-relations',
+    //             icon: 'icon-pencil',
+    //         }
+    //     ]
+    //   },
+    {
+        name: '模式管理',
+        url: '/scheme',
+        icon: 'icon-pie-chart'
+    },
       {
           divider: true
       },

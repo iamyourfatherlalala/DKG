@@ -1,173 +1,103 @@
 import React, { Component } from 'react';
 import {
-    Badge,
-    Button,
-    Form,
-    FormGroup,
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBody,
-    Table,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    Label,
-    Input
+  Badge,
+  FormGroup,
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardBody,
+  Table,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Label,
 } from 'reactstrap';
 // import ReactTable from 'react-table';
 // import 'react-table/react-table.css';
 // import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table';
 import DeleteRow from '../DeleteRow';
+import SchemeAllRelations from '../SchemeAllRelations';
+import SchemeQueryByConcept from '../SchemeQueryByConcept';
+import SchemeAddRelations from '../SchemeAddRelations';
 //import BootstrapTable from 'react-bootstrap-table-next';
 import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table-next';
 // import RemoteStoreDeleteRow from './remote-store-delete-row';
 
-let data = [
-  {   
-      "id": "0",
-      "fromConcept": "公司",
-      "relation": "CEO",
-      "toConcept": "人"
-  },
-  {
-      "id": "1",
-      "fromConcept": "公司",
-      "relation": "控股子公司",
-      "toConcept": "公司"
-  },
-  {
-      "id": "2",
-      "fromConcept": "人",
-      "relation": "创建",
-      "toConcept": "公司"
-  }
-]
+import 'semantic-ui-css/semantic.min.css';
+import { Icon, Input, Menu, Segment, Search, Form } from 'semantic-ui-react'
 
-// const selectRow = {
-//   mode: 'radio',
-//   clickToSelect: true
-// };
+import { browserHistory, Redirect } from 'react-router'
+import { BrowserRouter as Router, Route, IndexRedirect, Link } from 'react-router-dom';
 
 const columns = [
   {
     dataField: 'id',
     text: 'ID'
   }, {
-  dataField: 'fromConcept',
-  text: '概念'
-}, {
-  dataField: 'relation',
-  text: '关系'
-}, {
-  dataField: 'toConcept',
-  text: '概念'
-}];
+    dataField: 'fromConcept',
+    text: '概念'
+  }, {
+    dataField: 'relation',
+    text: '关系'
+  }, {
+    dataField: 'toConcept',
+    text: '概念'
+  }];
 
 class Scheme extends Component {
-        constructor(props) {
-        super(props);
-        this.state = {
-             AllRelations : data,
- 
-         }
-        this.getAllRelations = this.getAllRelations.bind(this);
-        this.getRelationsByConcept = this.getRelationsByConcept.bind(this);
-        }
-
-        // componentWillMount() {
-            
-        // }
-
-       getAllRelations() {
-        let url = `http://localhost:8080/relation`;
-         fetch(url)
-         .then(function(response) {
-             if (!response.ok) {
-                 throw Error(response.statusText);
-                }
-                return response;
-            }).then((response) => {
-                response.json().then((data) => {
-                     this.setState({ AllRelations: data });
-                    // alert(this.state.exam_conditions[0].id);
-                });
-             }).catch((error) => {
-                 console.log(error);
-                });
-       }
-
-       getRelationsByConcept() {
-        let url = `http://localhost:8080/relation`;
-        fetch(url)
-        .then(function(response) {
-            if (!response.ok) {
-                throw Error(response.statusText);
-               }
-               return response;
-           }).then((response) => {
-               response.json().then((data) => {
-                    this.setState({ AllRelations: data });
-                   // alert(this.state.exam_conditions[0].id);
-               });
-            }).catch((error) => {
-                console.log(error);
-               });
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItemNav: 'scheme_all_relations',
+      inputConcept: ''
     }
+   
+    this.handleNavClick = this.handleNavClick.bind(this);
+  }
 
-       onDeleteRow(row) {
-           data = data.filter((product) => {
-           return product.id !== row[0];
-      });
-      
-         this.setState({
-          AllRelations: data
-      });
-    }
+  // componentWillMount() {
 
-    render() {
-      
-      const { AllRelations } = this.state;
+  // }
 
 
-        return (
-            <div>
-            {/* <div>
-                这里是模式管理
-            </div> */}
-            <Card>
-              <CardHeader>
-                <strong>Options</strong>
-              </CardHeader>
-              <CardBody>
-                  <Form inline>
-                  <FormGroup className="pr-5">
-                      <Button color="primary" onClick={this.getAllRelations}>获取所有关系</Button>{' '}
-                  </FormGroup>              
-                  
-            
-                  <FormGroup className="pr-5">
-                      <Input type="scheme" name="scheme" id="searchScheme" placeholder="概念名" />
-                      <Button color="primary" onClick={this.getRelationsByConcept}>获取关系</Button>
-                  </FormGroup>
-                  
-                  <FormGroup className="pr-5">
-                    {/* <Col md="3">
-                      <Label htmlFor="file-input">添加关系</Label>
-                    </Col> */}
-                    {/* <Col xs="3" md="3"> */}
-                      <Input type="file" id="file-input" name="file-input"/>
-                    {/* </Col> */}
-                  </FormGroup>
-                </Form>
+  handleNavClick(e, { name }) {
+    this.setState({ activeItemNav: name });
+  }
 
-              </CardBody>
-            </Card>
+  render() {
+
+    const { activeItemNav, inputConcept } = this.state;
 
 
-             
-             {/* <BootstrapTable
+    return (
+      <Router>
+        <div>
+          <div>
+            <Menu pointing>
+              <Menu.Item as={Link} to='/scheme/all-relations' name='scheme_all_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>获取所有关系</Menu.Item>
+              <Menu.Item as={Link} to='/scheme/query-by-concept' name='scheme_query_by_concept' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>根据概念获取关系</Menu.Item>
+              <Menu.Item as={Link} to='/scheme/add-relations' name='scheme_add_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>添加关系</Menu.Item>
+
+
+              {/* <Menu.Menu position='right'>
+                <Menu.Item>
+                  <Input
+                    icon={<Icon name='search' inverted circular link={true} onClick={this.getRelationsByConcept}/>}
+                    placeholder='Search...'
+                  />
+                </Menu.Item>
+              </Menu.Menu> */}
+            </Menu>
+          </div>
+
+          <div>
+            <Route path="/scheme/all-relations" exact component={SchemeAllRelations} />
+            <Route path="/scheme/query-by-concept" exact component={SchemeQueryByConcept} />
+           <Route path="/scheme/add-relations" exact component={SchemeAddRelations}/> 
+          </div>
+
+          {/* <BootstrapTable
             keyField='id'
             data={ AllRelations }
             remote={ true }
@@ -176,24 +106,15 @@ class Scheme extends Component {
             selectRow={ { mode: 'radio' } }
             options={ { onDeleteRow: this.onDeleteRow } }
             /> */}
-         
-      <div>
-        <div className='col-md-offset-1 col-md-8'>
-          <div className='panel panel-default'>
-            <div className='panel-heading'>Remote Delete Row Example</div>
-            <div className='panel-body'>
-            {/* <RemoteStoreDeleteRow /> */}
-            <DeleteRow onDeleteRow={ this.onDeleteRow.bind(this) } { ...this.state } />
-            </div>
-          </div>
-        </div>
-        </div>
-            {/* <DeleteRow onDeleteRow={ this.onDeleteRow.bind(this) } { ...this.state } /> */}
 
-            
-            </div>
-        )
-    }
+
+
+
+
+        </div>
+      </Router>
+    )
+  }
 }
 
 export default Scheme;
