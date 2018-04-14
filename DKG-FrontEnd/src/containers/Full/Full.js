@@ -76,6 +76,9 @@ class Full extends Component {
                 <Route path="/domainExpert" name="领域专家管理" component={DomainExpert}/>
                 <Route path="/entity" name="实体管理" component={Entity}/>
                 <Route path="/scheme" name="模式管理" component={Scheme}/>
+                <Route path="/all-relations" name="所有关系" exact component={SchemeAllRelations} />
+                <Route path="/query-by-concept" name="根据概念获取关系" component={SchemeQueryByConcept} />
+                <Route path="/add-relations" name="添加关系" component={SchemeAddRelations}/> 
                 <Route path="/authorityManagement" name="权限管理" component={AuthorityManagement}/>
 
                 {/* //////////////////////////////////////////////////////////////////////// */}

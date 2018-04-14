@@ -75,9 +75,9 @@ class Scheme extends Component {
         <div>
           <div>
             <Menu pointing>
-              <Menu.Item as={Link} to='/scheme/all-relations' name='scheme_all_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>获取所有关系</Menu.Item>
-              <Menu.Item as={Link} to='/scheme/query-by-concept' name='scheme_query_by_concept' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>根据概念获取关系</Menu.Item>
-              <Menu.Item as={Link} to='/scheme/add-relations' name='scheme_add_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>添加关系</Menu.Item>
+              <Menu.Item as={Link} to='/all-relations' name='scheme_all_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>获取所有关系</Menu.Item>
+              <Menu.Item as={Link} to='/query-by-concept' name='scheme_query_by_concept' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>根据概念获取关系</Menu.Item>
+              <Menu.Item as={Link} to='/add-relations' name='scheme_add_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>添加关系</Menu.Item>
 
 
               {/* <Menu.Menu position='right'>
@@ -92,9 +92,9 @@ class Scheme extends Component {
           </div>
 
           <div>
-            <Route path="/scheme/all-relations" exact component={SchemeAllRelations} />
-            <Route path="/scheme/query-by-concept" exact component={SchemeQueryByConcept} />
-           <Route path="/scheme/add-relations" exact component={SchemeAddRelations}/> 
+            <Route path="/all-relations" exact component={SchemeAllRelations} />
+            <Route path="/query-by-concept" exact component={SchemeQueryByConcept} />
+           <Route path="/add-relations" exact component={SchemeAddRelations}/> 
           </div>
 
           {/* <BootstrapTable
