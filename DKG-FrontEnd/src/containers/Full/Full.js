@@ -24,6 +24,9 @@ import SchemeAddRelations from '../../components/SchemeAddRelations/';
 import SchemeAllRelations from '../../components/SchemeAllRelations/';
 import SchemeQueryByConcept from '../../components/SchemeQueryByConcept/';
 
+import EntityQueryByConcept from '../../components/EntityQueryByConcept/';
+import EntityQueryByName from '../../components/EntityQueryByName/';
+
 import AuthorityManagement from '../../components/AuthorityManagement/';
 
 // Base
@@ -79,6 +82,10 @@ class Full extends Component {
                 <Route path="/all-relations" name="所有关系" exact component={SchemeAllRelations} />
                 <Route path="/query-by-concept" name="根据概念获取关系" component={SchemeQueryByConcept} />
                 <Route path="/add-relations" name="添加关系" component={SchemeAddRelations}/> 
+
+                <Route path="/entity-query-by-name" name="根据名字获取实体" component={EntityQueryByName} />
+                <Route path="/entity-query-by-concept" name="根据概念获取实体" component={EntityQueryByConcept} />
+
                 <Route path="/authorityManagement" name="权限管理" component={AuthorityManagement}/>
 
                 {/* //////////////////////////////////////////////////////////////////////// */}

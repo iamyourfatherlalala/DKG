@@ -16,11 +16,11 @@ import {
 } from 'reactstrap';
 // import ReactTable from 'react-table';
 // import 'react-table/react-table.css';
-// import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table';
 import Scheme from '../Scheme';
-import DeleteRow from '../DeleteRow';
+//import DeleteRow from '../DeleteRow';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import BootstrapTable from 'react-bootstrap-table-next';
-import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table-next';
+// import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table-next';
 // import RemoteStoreDeleteRow from './remote-store-delete-row';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -89,13 +89,22 @@ class SchemeAllRelations extends Component {
             <div>
                 <Button primary onClick={this.getAllRelations}>刷新</Button>
 
-
                 <div className='col-md-offset-1 col-md-8'>
                     <div className='panel panel-default'>
                         {/* <div className='panel-heading'>Remote Delete Row Example</div> */}
                         <div className='panel-body'>
                             {/* <RemoteStoreDeleteRow /> */}
-                            <DeleteRow onDeleteRow={this.onDeleteRow} {...this.state} />
+                            {/* <DeleteRow onDeleteRow={this.onDeleteRow} {...this.state} /> */}
+                            <BootstrapTable data={AllRelations}
+                                remote={true}
+                                deleteRow={true}
+                                selectRow={{ mode: 'radio' }}
+                                options={{ onDeleteRow: this.onDeleteRow }}>
+                                <TableHeaderColumn dataField='id' isKey={true}>ID</TableHeaderColumn>
+                                <TableHeaderColumn dataField='fromConcept'>概念</TableHeaderColumn>
+                                <TableHeaderColumn dataField='relation'>关系</TableHeaderColumn>
+                                <TableHeaderColumn dataField='toConcept'>概念</TableHeaderColumn>
+                            </BootstrapTable>
                         </div>
                     </div>
                 </div>

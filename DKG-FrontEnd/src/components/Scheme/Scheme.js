@@ -50,9 +50,8 @@ class Scheme extends Component {
     super(props);
     this.state = {
       activeItemNav: 'scheme_all_relations',
-      inputConcept: ''
     }
-   
+
     this.handleNavClick = this.handleNavClick.bind(this);
   }
 
@@ -67,8 +66,7 @@ class Scheme extends Component {
 
   render() {
 
-    const { activeItemNav, inputConcept } = this.state;
-
+    const { activeItemNav } = this.state;
 
     return (
       <Router>
@@ -94,7 +92,7 @@ class Scheme extends Component {
           <div>
             <Route path="/all-relations" exact component={SchemeAllRelations} />
             <Route path="/query-by-concept" exact component={SchemeQueryByConcept} />
-           <Route path="/add-relations" exact component={SchemeAddRelations}/> 
+            <Route path="/add-relations" exact component={SchemeAddRelations} />
           </div>
 
           {/* <BootstrapTable
@@ -106,10 +104,6 @@ class Scheme extends Component {
             selectRow={ { mode: 'radio' } }
             options={ { onDeleteRow: this.onDeleteRow } }
             /> */}
-
-
-
-
 
         </div>
       </Router>

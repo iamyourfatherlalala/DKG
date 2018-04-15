@@ -8,7 +8,7 @@ export default class DeleteRow extends React.Component {
 
   render() {
     return (
-      <BootstrapTable data={ this.props.AllRelations }
+      <BootstrapTable data={ this.props.RelationsByConcept }
                       remote={ true }
                       deleteRow={ true }
                       selectRow={ { mode: 'radio' } }
