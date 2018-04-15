@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetch from 'isomorphic-fetch';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon, Input, Menu, Segment, Search, Form } from 'semantic-ui-react'
 
@@ -20,7 +21,7 @@ class SchemeAddRelations extends Component {
     upLoadFile(e) {
         e.preventDefault();
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        const url = `http://106.14.134.97/DKGBackend/`;
+        const url = `http://106.14.134.97/DKGBackend/relation/import`;
         const { file, AddedRelations } = this.state;
         let formdata = new FormData();
         formdata.append('file', file); 
@@ -31,9 +32,16 @@ class SchemeAddRelations extends Component {
             // headers: {
             //     'content-type': 'multipart/form-data'
             // },
-            data: {
-                file: file
-            }
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+                },
+            // data: {
+            //     file: file
+            // },
+            body: JSON.stringify({
+                data: file
+            })
         })
             .then(function (response) {
                 if (!response.ok) {

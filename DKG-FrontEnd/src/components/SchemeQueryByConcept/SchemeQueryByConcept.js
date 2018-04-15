@@ -25,6 +25,9 @@ class SchemeQueryByConcept extends Component {
         super(props);
         this.state = {
             inputConcept: '',
+            deleteFromConcept: '',
+            deleteRelation: '',
+            deleteToConcept: '',
             RelationsByConcept: []
         }
         this.getInputConcept = this.getInputConcept.bind(this);
@@ -37,7 +40,9 @@ class SchemeQueryByConcept extends Component {
     }
 
     getRelationsByConcept() {
-        const { inputConcept, RelationsByConcept } = this.state;
+        const { inputConcept,
+            deleteFromConcept, deleteRelation, deleteToConcept,
+            RelationsByConcept } = this.state;
         let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
         let url = `http://106.14.134.97/DKGBackend/relation/${inputConcept}`;
         console.log(inputConcept);
@@ -63,23 +68,65 @@ class SchemeQueryByConcept extends Component {
             }).catch((error) => {
                 console.log(error);
             });
-            this.setState({ inputConcept: '' });
+        this.setState({ inputConcept: '' });
         console.log('12345678900987654321');
     }
 
     onDeleteRow(row) {
-        let local_data = this.state.RelationsByConcept;
-        local_data = local_data.filter((data) => {
-            return data.id !== row[0];
-        });
+        const { inputConcept,
+            deleteFromConcept, deleteRelation, deleteToConcept,
+            RelationsByConcept } = this.state;
+            
+        //      /relation/概念名/关系名/概念名
 
-        this.setState({
-            RelationsByConcept: local_data
+        let data_remained = RelationsByConcept;
+        console.log(data_remained);
+        data_remained = data_remained.filter((data) => {
+            if(data.id === row[0]){
+                this.setState({
+                    deleteFromConcept: data['fromConcept'],
+                    deleteRelation: data['relation'],
+                    deleteToConcept: data['toConcept']
+                });
+            } else{
+                return data.id !== row[0];
+            }
         });
+        console.log(data_remained);
+        let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        let url = `http://106.14.134.97/DKGBackend/relation/${deleteFromConcept}/${deleteRelation}/${deleteToConcept}`;
+
+        console.log(inputConcept);
+
+        fetch((proxyurl + url), {
+            method: 'DELETE',
+            // credentials: 'same-origin'    
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                    if(response){
+                    console.log(response);
+                    this.setState({ RelationsByConcept: data_remained });
+                    console.log(data_remained);
+                    } else{
+                        alert('删除失败');
+                    }
+                    // alert(this.state.exam_conditions[0].id);
+                
+            }).catch((error) => {
+                console.log(error);
+            });
+        this.setState({ inputConcept: '' });
+        console.log('2333333333333333333333333333');
+
     }
 
     render() {
-        const { inputConcept, RelationsByConcept } = this.state;
+        const { inputConcept, deleteFromConcept, deleteRelation, deleteToConcept, RelationsByConcept } = this.state;
         return (
             <div>
                 <div>
@@ -95,7 +142,7 @@ class SchemeQueryByConcept extends Component {
                     <div className='panel panel-default'>
                         {/* <div className='panel-heading'>Remote Delete Row Example</div> */}
                         <div className='panel-body'>
-                        <BootstrapTable data={ RelationsByConcept }
+                            <BootstrapTable data={RelationsByConcept}
                                 remote={true}
                                 deleteRow={true}
                                 selectRow={{ mode: 'radio' }}
