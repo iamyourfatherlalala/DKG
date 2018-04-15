@@ -72,31 +72,33 @@ class SchemeQueryByConcept extends Component {
         console.log('12345678900987654321');
     }
 
-    onDeleteRow(row) {
-        const { inputConcept,
-            deleteFromConcept, deleteRelation, deleteToConcept,
-            RelationsByConcept } = this.state;
-            
+    onDeleteRow(row) {            
         //      /relation/概念名/关系名/概念名
-
-        let data_remained = RelationsByConcept;
-        console.log(data_remained);
+        let data_remained = this.state.RelationsByConcept;
+        let temp = {
+            FROMCONCEPT: '',
+            RELATION: '',
+            TOCONCEPT: ''
+        };
+        console.log(data_remained);  /////////////////////////////////////////////////////////
         data_remained = data_remained.filter((data) => {
             if(data.id === row[0]){
-                this.setState({
-                    deleteFromConcept: data['fromConcept'],
-                    deleteRelation: data['relation'],
-                    deleteToConcept: data['toConcept']
-                });
+                temp.FROMCONCEPT = data['fromConcept'];
+                temp.RELATION = data['relation'];
+                temp.TOCONCEPT = data['toConcept'];
+                
             } else{
                 return data.id !== row[0];
             }
         });
-        console.log(data_remained);
-        let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        let url = `http://106.14.134.97/DKGBackend/relation/${deleteFromConcept}/${deleteRelation}/${deleteToConcept}`;
+        
+        console.log('opps!!!!!!!!!!'+temp.FROMCONCEPT); ////////////////////////////////
 
-        console.log(inputConcept);
+        console.log(data_remained);  /////////////////////////////////////////////////////////
+        let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        let url = `http://106.14.134.97/DKGBackend/relation/${temp.FROMCONCEPT}/${temp.RELATION}/${temp.TOCONCEPT}`;
+ 
+        console.log(url);  /////////////////////////////////////////////////////////
 
         fetch((proxyurl + url), {
             method: 'DELETE',
@@ -109,9 +111,9 @@ class SchemeQueryByConcept extends Component {
                 return response;
             }).then((response) => {
                     if(response){
-                    console.log(response);
+                    console.log(response);  /////////////////////////////////////////////////////////
                     this.setState({ RelationsByConcept: data_remained });
-                    console.log(data_remained);
+                    console.log(data_remained);  /////////////////////////////////////////////////////////
                     } else{
                         alert('删除失败');
                     }
@@ -121,7 +123,7 @@ class SchemeQueryByConcept extends Component {
                 console.log(error);
             });
         this.setState({ inputConcept: '' });
-        console.log('2333333333333333333333333333');
+        console.log('2333333333333333333333333333');  /////////////////////////////////////////////////////////
 
     }
 
