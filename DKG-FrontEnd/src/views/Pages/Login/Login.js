@@ -32,15 +32,15 @@ class Login extends Component {
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button onClick={ ()=> this.props.history.push('/concept') } color="primary" className="px-4">登录</Button>
+                        <Button onClick={()=> this.props.history.push('/concept')} color="primary" className="px-4">登录</Button>
                       </Col>
                       <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">忘记密码?</Button>
+                        <Button color="link" className="px-0" onClick={()=> this.props.history.push('/register')}>注册账号</Button>
                       </Col>
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                {/* <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>注册</h2>
@@ -48,7 +48,7 @@ class Login extends Component {
                       <Button color="primary" className="mt-3" active>现在就注册!</Button>
                     </div>
                   </CardBody>
-                </Card>
+                </Card> */}
               </CardGroup>
             </Col>
           </Row>

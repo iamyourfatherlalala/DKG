@@ -17,8 +17,17 @@ import Widgets from '../../views/Widgets/';
 
 import Concept from '../../components/Concept/';
 import DomainExpert  from '../../components/DomainExpert/';
-import Scheme from '../../components/Scheme/'
-import Entity from '../../components/Entity/'
+import Scheme from '../../components/Scheme/';
+import Entity from '../../components/Entity/';
+
+import SchemeAddRelations from '../../components/SchemeAddRelations/';
+import SchemeAllRelations from '../../components/SchemeAllRelations/';
+import SchemeQueryByConcept from '../../components/SchemeQueryByConcept/';
+
+import EntityQueryByConcept from '../../components/EntityQueryByConcept/';
+import EntityQueryByName from '../../components/EntityQueryByName/';
+
+import AuthorityManagement from '../../components/AuthorityManagement/';
 
 // Base
 import Cards from '../../views/Base/Cards/';
@@ -70,6 +79,17 @@ class Full extends Component {
                 <Route path="/domainExpert" name="领域专家管理" component={DomainExpert}/>
                 <Route path="/entity" name="实体管理" component={Entity}/>
                 <Route path="/scheme" name="模式管理" component={Scheme}/>
+                <Route path="/all-relations" name="所有关系" exact component={SchemeAllRelations} />
+                <Route path="/query-by-concept" name="根据概念获取关系" component={SchemeQueryByConcept} />
+                <Route path="/add-relations" name="添加关系" component={SchemeAddRelations}/> 
+
+                <Route path="/entity-query-by-name" name="根据名字获取实体" component={EntityQueryByName} />
+                <Route path="/entity-query-by-concept" name="根据概念获取实体" component={EntityQueryByConcept} />
+
+                <Route path="/authorityManagement" name="权限管理" component={AuthorityManagement}/>
+
+                {/* //////////////////////////////////////////////////////////////////////// */}
+
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
                 <Route path="/theme/colors" name="Colors" component={Colors}/>
                 <Route path="/theme/typography" name="Typography" component={Typography}/>
@@ -102,7 +122,7 @@ class Full extends Component {
                 <Route path="/notifications/modals" name="Modals" component={Modals}/>
                 <Route path="/widgets" name="Widgets" component={Widgets}/>
                 <Route path="/charts" name="Charts" component={Charts}/>
-                <Redirect from="/" to="/dashboard"/>
+                <Redirect from="/" to="/concept"/>
               </Switch>
             </Container>
           </main>
