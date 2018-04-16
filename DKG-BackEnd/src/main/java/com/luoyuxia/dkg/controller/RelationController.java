@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,14 +32,17 @@ public class RelationController {
         return new ResponseEntity<>(dkgConceptRelationList, HttpStatus.OK);
     }
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public ResponseEntity importRelation(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity importRelation(@RequestParam("file") CommonsMultipartFile file) {
         List<DKGConceptRelation> conceptRelations = new ArrayList<>();
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line = bufferedReader.readLine();
-            String[] words = line.split(this.separator);
-            if (words.length >= 3) {
-                DKGConceptRelation conceptRelation = new DKGConceptRelation(words[0], words[1], words[2]);
-                conceptRelations.add(conceptRelation);
+            String line;
+            while ((line = bufferedReader.readLine())!=null) {
+                line = new String(line.getBytes(), "UTF-8");
+                String[] words = line.split(this.separator);
+                if (words.length >= 3) {
+                    DKGConceptRelation conceptRelation = new DKGConceptRelation(words[0], words[1], words[2]);
+                    conceptRelations.add(conceptRelation);
+                }
             }
         }
         catch (IOException e){

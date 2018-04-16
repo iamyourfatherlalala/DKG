@@ -40,4 +40,11 @@ public class DKGConfiguration extends WebMvcConfigurerAdapter{
     public Driver neo4jDriver() {
         return GraphDatabase.driver(neo4jUrl, AuthTokens.basic(username, password));
     }
+
+    @Bean
+    public CommonsMultipartResolver commonsMultipartResolver() {
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        commonsMultipartResolver.setDefaultEncoding("UTF-8");
+        return commonsMultipartResolver;
+    }
 }
