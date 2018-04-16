@@ -93,9 +93,17 @@ class EntityQueryByName extends Component {
 
                 {/* <div className='col-md-offset-1 col-md-8'>
                     <div className='panel panel-default'>
-                        <div className='panel-heading'>根据名字获取实体</div>
                         <div className='panel-body'>
-                            <DeleteRow onDeleteRow={this.onDeleteRow} {...this.state} />
+                            <BootstrapTable data={RelationsByConcept}
+                                remote={true}
+                                deleteRow={true}
+                                selectRow={{ mode: 'radio' }}
+                                options={{ onDeleteRow: this.onDeleteRow }}>
+                                <TableHeaderColumn dataField='id' isKey={true}>ID</TableHeaderColumn>
+                                <TableHeaderColumn dataField='fromConcept'>概念</TableHeaderColumn>
+                                <TableHeaderColumn dataField='relation'>关系</TableHeaderColumn>
+                                <TableHeaderColumn dataField='toConcept'>概念</TableHeaderColumn>
+                            </BootstrapTable>
                         </div>
                     </div>
                 </div> */}

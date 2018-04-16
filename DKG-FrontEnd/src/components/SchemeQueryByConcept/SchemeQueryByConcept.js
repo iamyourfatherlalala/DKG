@@ -25,9 +25,6 @@ class SchemeQueryByConcept extends Component {
         super(props);
         this.state = {
             inputConcept: '',
-            deleteFromConcept: '',
-            deleteRelation: '',
-            deleteToConcept: '',
             RelationsByConcept: []
         }
         this.getInputConcept = this.getInputConcept.bind(this);
@@ -40,9 +37,7 @@ class SchemeQueryByConcept extends Component {
     }
 
     getRelationsByConcept() {
-        const { inputConcept,
-            deleteFromConcept, deleteRelation, deleteToConcept,
-            RelationsByConcept } = this.state;
+        const { inputConcept, RelationsByConcept } = this.state;
         let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
         let url = `http://106.14.134.97/DKGBackend/relation/${inputConcept}`;
         console.log(inputConcept);
@@ -128,7 +123,7 @@ class SchemeQueryByConcept extends Component {
     }
 
     render() {
-        const { inputConcept, deleteFromConcept, deleteRelation, deleteToConcept, RelationsByConcept } = this.state;
+        const { inputConcept, RelationsByConcept } = this.state;
         return (
             <div>
                 <div>

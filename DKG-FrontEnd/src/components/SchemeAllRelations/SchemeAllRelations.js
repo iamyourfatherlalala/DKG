@@ -72,15 +72,58 @@ class SchemeAllRelations extends Component {
             });
     }
 
-    onDeleteRow(row) {
-        let local_data = this.state.AllRelations;
-        local_data = local_data.filter((data) => {
-            return data.id !== row[0];
+    onDeleteRow(row) {            
+        //      /relation/概念名/关系名/概念名
+        let data_remained = this.state.AllRelations;
+        let temp = {
+            FROMCONCEPT: '',
+            RELATION: '',
+            TOCONCEPT: ''
+        };
+        console.log(data_remained);  /////////////////////////////////////////////////////////
+        data_remained = data_remained.filter((data) => {
+            if(data.id === row[0]){
+                temp.FROMCONCEPT = data['fromConcept'];
+                temp.RELATION = data['relation'];
+                temp.TOCONCEPT = data['toConcept'];
+                
+            } else{
+                return data.id !== row[0];
+            }
         });
+        
+        console.log('opps!!!!!!!!!!'+temp.FROMCONCEPT); ////////////////////////////////
 
-        this.setState({
-            AllRelations: local_data
-        });
+        console.log(data_remained);  /////////////////////////////////////////////////////////
+        let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        let url = `http://106.14.134.97/DKGBackend/relation/${temp.FROMCONCEPT}/${temp.RELATION}/${temp.TOCONCEPT}`;
+ 
+        console.log(url);  /////////////////////////////////////////////////////////
+
+        fetch((proxyurl + url), {
+            method: 'DELETE',
+            // credentials: 'same-origin'    
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                    if(response){
+                    console.log(response);  /////////////////////////////////////////////////////////
+                    this.setState({ AllRelations: data_remained });
+                    console.log(data_remained);  /////////////////////////////////////////////////////////
+                    } else{
+                        alert('删除失败');
+                    }
+                    // alert(this.state.exam_conditions[0].id);
+                
+            }).catch((error) => {
+                console.log(error);
+            });
+        console.log('2333333333333333333333333333');  /////////////////////////////////////////////////////////
+
     }
 
     render() {

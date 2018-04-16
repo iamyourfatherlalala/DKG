@@ -21,7 +21,7 @@ class SchemeAddRelations extends Component {
     upLoadFile(e) {
         e.preventDefault();
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        const url = `http://106.14.134.97/DKGBackend/relation/import`;
+        const url = "http://106.14.134.97/DKGBackend/relation/import/";
         const { file, AddedRelations } = this.state;
         let formdata = new FormData();
         formdata.append('file', file); 
@@ -32,16 +32,17 @@ class SchemeAddRelations extends Component {
             // headers: {
             //     'content-type': 'multipart/form-data'
             // },
-            headers: { 
-                'Accept': 'application/json',
-                'Content-Type': 'application/json' 
-                },
+            // headers: { 
+            //     'Accept': 'application/json',
+            //   //  'Content-Type': 'application/json' 
+            //     },
             // data: {
             //     file: file
             // },
-            body: JSON.stringify({
-                data: file
-            })
+            // body: JSON.stringify({
+            //     data: formdata[0]
+            // })
+            body: file
         })
             .then(function (response) {
                 if (!response.ok) {
@@ -69,7 +70,7 @@ class SchemeAddRelations extends Component {
             <div>
                 <Form onSubmit={this.upLoadFile}>
                     <Form.Group>
-                        <Form.Input type="file" name='file' onChange={this.onChange}/>
+                        <Form.Input type="file" name='file' accept=".owl" onChange={this.onChange}/>
                         <Form.Button content='添加关系' />
                     </Form.Group>
                 </Form>
