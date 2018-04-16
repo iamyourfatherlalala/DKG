@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DKGEntity {
+    private long id;
+    private List<String> labels = new ArrayList<>();
+    private String name;
     private List<DKGEntityProperty> dkgEntityPropertyList = new ArrayList<>();
     private List<DKGEntityRelation> dkgEntityRelationList = new ArrayList<>();
     public DKGEntity() {
@@ -31,5 +34,25 @@ public class DKGEntity {
 
     public void setDkgEntityRelationList(List<DKGEntityRelation> dkgEntityRelationList) {
         this.dkgEntityRelationList = dkgEntityRelationList;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<String> labels) {
+        this.labels = labels;
+    }
+
+    public void addLabel(String label) {
+        this.labels.add(label);
     }
 }

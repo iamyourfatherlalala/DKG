@@ -58,8 +58,8 @@ public class DKGEntityServiceImpl implements DKGEntityService{
     private Collection<DKGEntity> getEntityByMatchMap(Map<String, String> matchMap, String type) {
         Session session = neo4jDriver.session();
         String matchSql = constructSQLByMatchMap(matchMap, type, "a");
-        String totalSQL = "MATCH " +  matchSql + "-[r]-(n)  RETURN a, r, n ";
-        StatementResult result = session.run(totalSQL);
+        String singleEntitySQL = "MATCH " + matchSql + " RETURN a";
+        StatementResult result = session.run(singleEntitySQL);
         Map<Long, DKGEntity> DKGEntityMap = new HashMap<>();
         while (result.hasNext()) {
             Record record = result.next();
@@ -67,11 +67,20 @@ public class DKGEntityServiceImpl implements DKGEntityService{
             if (DKGEntityMap.get(destNode.id()) == null) {
                 DKGEntity dkgEntity = new DKGEntity();
                 dkgEntity.setDkgEntityPropertyList(getAllEntityPropertiesForNode(destNode));
+                dkgEntity.setId(destNode.id());
+                destNode.labels().forEach(dkgEntity::addLabel);
                 DKGEntityMap.put(destNode.id(), dkgEntity);
             }
+        }
+        String withRelationSQL = "MATCH " +  matchSql + "-[r]-(n)  RETURN a, r, n ";
+        result = session.run(withRelationSQL);
+        while (result.hasNext()) {
+            Record record = result.next();
+            Node destNode = record.get("a").asNode();
             Relationship relation = record.get("r").asRelationship();
             Node node = record.get("n").asNode();
             DKGEntityRelation dkgEntityRelation = new DKGEntityRelation(relation.type(), getAllEntityPropertiesForNode(node));
+            destNode.labels().forEach(dkgEntityRelation::addLabel);
             DKGEntityMap.get(destNode.id()).addDKGEntityRelation(dkgEntityRelation);
         }
         session.close();
