@@ -24,25 +24,18 @@ class SchemeAddRelations extends Component {
         const url = "http://106.14.134.97/DKGBackend/relation/import/";
         const { file, AddedRelations } = this.state;
         let formdata = new FormData();
-        formdata.append('file', file); 
-        
+        formdata.append('file', file);
+
         console.log(file);
         fetch((proxyurl + url), {
             method: 'POST',
-            // headers: {
-            //     'content-type': 'multipart/form-data'
-            // },
-            // headers: { 
-            //     'Accept': 'application/json',
-            //   //  'Content-Type': 'application/json' 
-            //     },
             // data: {
             //     file: file
             // },
             // body: JSON.stringify({
             //     data: formdata[0]
             // })
-            body: file
+            body: formdata
         })
             .then(function (response) {
                 if (!response.ok) {
@@ -70,7 +63,7 @@ class SchemeAddRelations extends Component {
             <div>
                 <Form onSubmit={this.upLoadFile}>
                     <Form.Group>
-                        <Form.Input type="file" name='file' accept=".owl" onChange={this.onChange}/>
+                        <Form.Input type="file" name='file' onChange={this.onChange}/>
                         <Form.Button content='添加关系' />
                     </Form.Group>
                 </Form>
