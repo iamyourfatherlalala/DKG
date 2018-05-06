@@ -28,6 +28,29 @@
         <HikariCP.version>2.7.4</HikariCP.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <!-- 设置默认激活这个配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 发布环境 -->
+            <id>release</id>
+            <properties>
+                <profiles.active>release</profiles.active>
+                <env>release</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -185,6 +208,15 @@
     </dependencies>
 
     <build>
+        <filters>
+            <filter>src/main/filter/${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
