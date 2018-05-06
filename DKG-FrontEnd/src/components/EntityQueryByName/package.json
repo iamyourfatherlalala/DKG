@@ -1,0 +1,6 @@
+{
+    "name": "EntityQueryByName",
+    "version": "1.0.0",
+    "main": "./EntityQueryByName.js",
+    "private": true
+  }

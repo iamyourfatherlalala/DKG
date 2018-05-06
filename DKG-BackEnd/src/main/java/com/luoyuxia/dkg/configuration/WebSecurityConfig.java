@@ -1,6 +1,7 @@
 package com.luoyuxia.dkg.configuration;
 
 import com.luoyuxia.dkg.filter.JwtAuthenticationTokenFilter;
+import com.luoyuxia.dkg.filter.MyCORSFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    @Autowired
+    private MyCORSFilter myCORSFilter;
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder)
@@ -62,7 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .anyRequest().permitAll();
         // add JWT filter
         httpSecurity
-                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(myCORSFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl().and().contentTypeOptions().disable()
                 .frameOptions().disable();
     }
