@@ -116,7 +116,13 @@ module.exports = (env = {}) => {
           {from: './public/img', to: 'img'}
         ],
         {copyUnmodified: false}
-      )
+      ),
+      // new webpack.ProvidePlugin({
+      //   '$': 'jquery',
+      //   'jQuery': 'jquery',
+      //   'window.jQuery': 'jquery',
+      //   'window.$': 'jquery'
+      // })
     ]
   }
 };

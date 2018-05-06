@@ -63,7 +63,7 @@ class SchemeAddRelations extends Component {
             <div>
                 <Form onSubmit={this.upLoadFile}>
                     <Form.Group>
-                        <Form.Input type="file" name='file' accept=".*" onChange={this.onChange}/>
+                        <Form.Input type="file" name='file' onChange={this.onChange}/>
                         <Form.Button content='添加关系' />
                     </Form.Group>
                 </Form>
