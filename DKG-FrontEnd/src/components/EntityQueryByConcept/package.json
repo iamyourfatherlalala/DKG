@@ -1,6 +1,0 @@
-{
-    "name": "EntityQueryByConcept",
-    "version": "1.0.0",
-    "main": "./EntityQueryByConcept.js",
-    "private": true
-  }

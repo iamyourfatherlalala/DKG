@@ -1,6 +1,0 @@
-{
-    "name": "AuthorityManagement",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./AuthorityManagement.js"
-  }
