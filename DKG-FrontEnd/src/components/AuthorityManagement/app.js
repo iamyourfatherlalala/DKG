@@ -82,9 +82,9 @@ function priorityFormatter(cell, row) {
   else return cell;
 }
 
-function trClassNameFormat(rowData, rIndex) {
-  return rIndex % 3 === 0 ? 'third-tr' : '';
-}
+// function trClassNameFormat(rowData, rIndex) {
+//   return rIndex % 3 === 0 ? 'third-tr' : '';
+// }
 function nameValidator(value) {
   if (!value) {
     return 'Job Name is required!';
@@ -104,7 +104,7 @@ export default class App extends React.Component {
   render() {
     return (
       <BootstrapTable data={ jobs }
-        trClassName={ trClassNameFormat }
+        // trClassName={ trClassNameFormat }
         selectRow={ selectRowProp }
         cellEdit={ cellEditProp }
         options={ options }

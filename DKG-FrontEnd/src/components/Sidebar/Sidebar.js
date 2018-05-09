@@ -144,6 +144,8 @@ class Sidebar extends Component {
       return link === 'http';
     };
 
+    // let hasCreatePermission = tool.getAuth("createUser");  
+
     // sidebar-nav root
     return (
       <div className="sidebar">
@@ -151,6 +153,7 @@ class Sidebar extends Component {
         <SidebarForm/>
         <nav className="sidebar-nav">
           <Nav>
+          {/* {hasCreatePermission ? <Button>创建用户</Button> : null} */}
             {navList(nav.items)}
           </Nav>
         </nav>

@@ -1,0 +1,6 @@
+{
+    "name": "Can",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./Can.js"
+  }
