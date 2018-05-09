@@ -35,8 +35,54 @@ class EntityQueryByName extends Component {
         super(props);
         this.state = {
             inputName: '',
-            EntityByName: []
-        }
+            EntityByName: [],
+            id: 0,
+            nodes: [],
+            edges: [],
+            style: [
+                {
+                    selector: 'node[label = "公司"]',
+                    css: {
+                        'background-color': '#6FB1FC',
+                        'width': 'mapData(baz, 0, 10, 10, 40)',
+                        'height': 'mapData(baz, 0, 10, 10, 40)',
+                        'content': 'data(name)'
+                    }
+                },
+                {
+                    selector: 'node[label = "property"]',
+                    css: {
+                        'background-color': '#F5A45D',
+                        'width': 'mapData(baz, 0, 10, 10, 40)',
+                        'height': 'mapData(baz, 0, 10, 10, 40)',
+                        'content': 'data(propertyValue)'
+                    }
+                },
+                {
+                    selector: 'edge',
+                    css: {
+                        'content': 'data(relationship)',
+                        'curve-style': 'bezier',
+                        'width': 1,
+                        'line-color': 'black',
+                        'target-arrow-color': '#ddd',
+                        'target-arrow-shape': 'triangle'
+                    }
+                }
+            ],
+            layout: {
+                name: 'circle',
+                padding: 10
+                /*
+                name: 'concentric',
+                concentric: function (node) {
+                    return node.degree()
+                },
+                levelWidth: function (nodes) {
+                    return 2
+                } */
+            }
+        };
         this.getInputName = this.getInputName.bind(this);
         this.getEntityByName = this.getEntityByName.bind(this);
         this.renderCytoscapeElement = this.renderCytoscapeElement.bind(this);
@@ -53,11 +99,11 @@ class EntityQueryByName extends Component {
     getEntityByName() {
         const { inputName } = this.state;
         let proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        let url = `http://106.14.134.97/DKGBackend/entity/queryByName/${inputName}`;
+        let url = `http://localhost:8080/entity/queryByName/${inputName}`;
         console.log(inputName);
-        fetch((proxyurl + url), {
+        fetch((url), {
             method: 'GET',
-            // credentials: 'same-origin'    
+            //    credentials: 'same-origin'
         })
             .then(function (response) {
                 if (!response.ok) {
@@ -66,13 +112,61 @@ class EntityQueryByName extends Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
-                    // var id = "id";
-                    // for (let i = 0; i < data.length; i++) {
-                    //     data[i][id] = i.toString();
-                    // }
                     console.log(data);
-                    this.setState({ EntityByName: data });
-                    // alert(this.state.exam_conditions[0].id);
+                    this.setState({
+                        EntityByName: data, nodes: [],
+                        edges: [], id: 0
+                    });
+                    data.forEach(node => {
+                        let destNodeId = node['id'];
+                        const labels = node['labels'];
+                        const destNode = { data: { id: destNodeId, label: labels && labels.length > 0 ? labels[0] : 'Unknown' } };
+                        const dkgEntityPropertyList = node['dkgEntityPropertyList'];
+                        dkgEntityPropertyList.forEach(p => {
+                            const propertyName = p['propertyName'];
+                            const propertyValue = p['propertyValue'];
+                            console.log(propertyValue);
+                            if (propertyName === 'name') {
+                                destNode['data']['name'] = propertyValue
+                            }
+                        });
+                        const relationList = node['dkgEntityRelationList'];
+                        relationList.forEach(r => {
+                            const nodeId = `property-${this.state.id++}`;
+                            let name = 'Unknown';
+                            const relation = r['relation'];
+                            const toDKGEntityPropertyList = r['toDKGEntityPropertyList'];
+                            for (let i = 0; i < toDKGEntityPropertyList.length; i++) {
+                                if (toDKGEntityPropertyList[i]['propertyName'] === 'name') {
+                                    name = toDKGEntityPropertyList[i]['propertyValue']
+                                }
+                            }
+                            this.state.nodes.push({
+                                data: {
+                                    id: nodeId,
+                                    propertyValue: name,
+                                    label: 'property'
+                                }
+                            });
+                            this.state.edges.push({
+                                data: {
+                                    source: destNodeId,
+                                    target: nodeId,
+                                    relationship: relation
+                                }
+                            })
+                        });
+                        this.state.nodes.push(destNode);
+                        cytoscape({
+                            container: document.getElementById('cy'),
+                            style: this.state.style,
+                            elements: {
+                                nodes: this.state.nodes,
+                                edges: this.state.edges
+                            },
+                            layout: this.state.layout
+                        })
+                    })
                 });
             }).catch((error) => {
                 console.log(error);
@@ -84,6 +178,8 @@ class EntityQueryByName extends Component {
     renderCytoscapeElement() {
         // cytoscape.use(qtip);
         console.log('* Cytoscape.js is rendering the graph..');
+
+
 
         this.cy = cytoscape({
             container: document.getElementById('cy'),
@@ -229,7 +325,7 @@ class EntityQueryByName extends Component {
     render() {
         const { inputName, EntityByName } = this.state;
         let cyStyle = {
-            height: '1000px',
+            height: '800px',
             width: '1000px',
             margin: '20px 0px'
         };
