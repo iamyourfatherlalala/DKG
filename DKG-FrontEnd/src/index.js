@@ -36,3 +36,16 @@ ReactDOM.render((
     </Switch>
   </HashRouter>
 ), document.getElementById('root'));
+
+
+// ReactDOM.render((
+//   <HashRouter>
+//     <Switch>
+//       <Route exact path="/home" name="Login Page" component={Full}/>
+//       <Route exact path="/register" name="Register Page" component={Register}/>
+//       <Route exact path="/404" name="Page 404" component={Page404}/>
+//       <Route exact path="/500" name="Page 500" component={Page500}/>
+//       <Route path="/" name="登入" component={Login}/>
+//     </Switch>
+//   </HashRouter>
+// ), document.getElementById('root'));

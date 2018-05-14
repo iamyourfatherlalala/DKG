@@ -3,6 +3,14 @@ import {Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGrou
 import { Link } from 'react-router-dom'
 
 class Login extends Component {
+    constructor(props) {
+      super(props);
+      this.state = { 
+        username: '',
+        password: ''
+      }
+    }
+  
   render() {
     return (
       <div className="app flex-row align-items-center">

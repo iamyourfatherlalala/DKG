@@ -220,14 +220,6 @@ class EntityQueryByName extends Component {
 
 
             elements: {
-                // nodes: [
-                //     { data: { id: 'a', foo: 3, bar: 5, baz: 7 } },
-                //     { data: { id: 'b', foo: 7, bar: 1, baz: 3 } },
-                //     { data: { id: 'c', foo: 2, bar: 7, baz: 6 } },
-                //     { data: { id: 'd', foo: 9, bar: 5, baz: 2 } },
-                //     { data: { id: 'e', foo: 2, bar: 4, baz: 5 } }
-                // ],
-
                 nodes: [
                     { data: { id: 'a' } },
                     { data: { id: 'b' } },
@@ -235,16 +227,6 @@ class EntityQueryByName extends Component {
                     { data: { id: 'd' } },
                     { data: { id: 'e' } }
                 ],
-
-                // edges: [
-                //     { data: { id: 'ae', weight: 1, source: 'a', target: 'e', label: 'edge ae' }, classes: 'autorotate' },
-                //     { data: { id: 'ab', weight: 3, source: 'a', target: 'b', label: 'edge ab' }, classes: 'autorotate' },
-                //     { data: { id: 'be', weight: 4, source: 'b', target: 'e', label: 'edge be' }, classes: 'autorotate' },
-                //     { data: { id: 'bc', weight: 5, source: 'b', target: 'c', label: 'edge bc' }, classes: 'autorotate' },
-                //     { data: { id: 'ce', weight: 6, source: 'c', target: 'e', label: 'edge ce' }, classes: 'autorotate' },
-                //     { data: { id: 'cd', weight: 2, source: 'c', target: 'd', label: 'edge cd' }, classes: 'autorotate' },
-                //     { data: { id: 'de', weight: 7, source: 'd', target: 'e', label: 'edge de' }, classes: 'autorotate' }
-                // ]
 
                 edges: [
                     { data: { id: 'ae', source: 'a', target: 'e', label: 'edge ae' }, classes: 'autorotate' },
@@ -286,20 +268,6 @@ class EntityQueryByName extends Component {
 
         });
 
-        // cy.$('#a').qtip({
-        //     content: 'Hello!',
-        //     position: {
-        //       my: 'top center',
-        //       at: 'bottom center'
-        //     },
-        //     style: {
-        //       classes: 'qtip-bootstrap',
-        //       tip: {
-        //         width: 16,
-        //         height: 8
-        //       }
-        //     }
-        //   });
 
         this.cy.on('tap', 'node', function (event) {
             console.log('lalalalalalalalalalalalalalalallalalallalalala')

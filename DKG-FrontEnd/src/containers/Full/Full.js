@@ -122,7 +122,7 @@ class Full extends Component {
                 <Route path="/notifications/modals" name="Modals" component={Modals}/>
                 <Route path="/widgets" name="Widgets" component={Widgets}/>
                 <Route path="/charts" name="Charts" component={Charts}/>
-                <Redirect from="/" to="/concept"/>
+                {/* <Redirect from="/" to="/concept"/> */}
               </Switch>
             </Container>
           </main>

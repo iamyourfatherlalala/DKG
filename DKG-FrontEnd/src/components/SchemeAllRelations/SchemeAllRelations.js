@@ -14,18 +14,13 @@ import {
     PaginationLink,
     Label,
 } from 'reactstrap';
-// import ReactTable from 'react-table';
-// import 'react-table/react-table.css';
 import Scheme from '../Scheme';
-//import DeleteRow from '../DeleteRow';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-//import BootstrapTable from 'react-bootstrap-table-next';
-// import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table-next';
-// import RemoteStoreDeleteRow from './remote-store-delete-row';
-
 import 'semantic-ui-css/semantic.min.css';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import '../../css/react-bootstrap-table.css';
 import { Input, Menu, Segment, Button } from 'semantic-ui-react'
-
 import { browserHistory, Redirect } from 'react-router'
 import { BrowserRouter as Router, Route, IndexRedirect, Link } from 'react-router-dom';
 
