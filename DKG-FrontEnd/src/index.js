@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 // Styles
 // Import Flag Icons Set
@@ -41,11 +41,19 @@ ReactDOM.render((
 // ReactDOM.render((
 //   <HashRouter>
 //     <Switch>
-//       <Route exact path="/home" name="Login Page" component={Full}/>
-//       <Route exact path="/register" name="Register Page" component={Register}/>
-//       <Route exact path="/404" name="Page 404" component={Page404}/>
-//       <Route exact path="/500" name="Page 500" component={Page500}/>
-//       <Route path="/" name="登入" component={Login}/>
+//       <Route path="/" component={Login}>
+//         <Route path="/home" name="Home" component={Full}/>
+//       </Route>
 //     </Switch>
 //   </HashRouter>
 // ), document.getElementById('root'));
+
+{/* <Route path="/" component={App}>
+  <IndexRoute component={HomePage} />
+  <Route path="t/:tid" component={TopicPage} />
+  <Route path="t/:tid/edit" component={TopicEditPage} />
+  <Route path="c" component={CafesPage} />
+  <Route path="c/:slug" component={CafePage} />
+  <Route path="c/:slug/create" component={TopicCreatePage} />
+  <Route path="u/:username" component={UserPage} />
+</Route> */}

@@ -28,6 +28,8 @@ import EntityQueryByConcept from '../../components/EntityQueryByConcept/';
 import EntityQueryByName from '../../components/EntityQueryByName/';
 
 import AuthorityManagement from '../../components/AuthorityManagement/';
+import SearchUsers from '../../components/SearchUsers/';
+import Events from '../../components/Events/';
 
 // Base
 import Cards from '../../views/Base/Cards/';
@@ -86,8 +88,9 @@ class Full extends Component {
                 <Route path="/entity-query-by-name" name="根据名字获取实体" component={EntityQueryByName} />
                 <Route path="/entity-query-by-concept" name="根据概念获取实体" component={EntityQueryByConcept} />
 
-                <Route path="/authorityManagement" name="权限管理" component={AuthorityManagement}/>
-
+                <Route path="/authorityManagement" name="用户列表" component={AuthorityManagement}/>
+                <Route path="/searchUsers" name="搜索用户" component={SearchUsers}/>
+                <Route path="/events" name="事件管理" component={Events}/>
                 {/* //////////////////////////////////////////////////////////////////////// */}
 
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>

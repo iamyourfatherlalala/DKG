@@ -1,9 +1,11 @@
 const routes = {
   '/': '主页',
-  '/authorityManagement': '权限管理',
+  '/authorityManagement': '用户列表',
+  '/searchUsers': '搜索用户',
   '/concept': '术语管理',
   '/domainExpert': '领域专家管理',
   '/scheme': '模式管理',
+  '/events': '事件管理',
   '/all-relations': '所有关系',
   '/query-by-concept': '根据概念获取关系',
   '/add-relations': '添加关系',
