@@ -10,20 +10,12 @@ function getJWT(username, password) {
     method: 'GET',
     // credentials: 'same-origin'    
   })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-      alert('12345678980');
-    }).then((response) => {
-        console.log(response)
-        JWT = response;
-        // console.log(JWT);
-        alert(response)
-        alert(JWT)
-        alert('111111111111111111')
-    
+    .then((response) => {
+      console.log(response)
+      // JWT = response;
+      // console.log(JWT);
+      alert('111111111111111111')
+
     }).catch((error) => {
       console.log(error);
     });
@@ -32,7 +24,7 @@ function getJWT(username, password) {
 
 function decodeJWT(jwt) {
   let login_user = {};
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";  
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
   const url = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
   fetch((proxyurl + url), {
     method: 'GET',
@@ -44,10 +36,10 @@ function decodeJWT(jwt) {
       }
       return response;
     }).then((response) => {
-        login_user = response;
-        console.log(login_user);
-        alert('解密成功！！！！');
-    
+      login_user = response;
+      console.log(login_user);
+      alert('解密成功！！！！');
+
     }).catch((error) => {
       console.log(error);
     });
@@ -73,15 +65,37 @@ class Login extends Component {
 
   handleSubmit() {
     const { username, password, jwt } = this.state;
-   // const JWT = getJWT(username, password);
+   // const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+    const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}`;
 
-    if( username == 'admin'){
-      window.location = "https://cner.herokuapp.com/";
-    } else if( username == 'User1' ){
-      window.location = "https://cner.herokuapp.com/";
-    } else if( username == 'User2'){
-      alert('没有权限进入改系统')
-    }
+    //const JWT = getJWT(username, password);
+
+
+    fetch((url), {
+      method: 'GET',
+      mode: 'no-cors'
+    }).then(function (res) {
+      if (res.ok) {
+        // return
+        return res.json().then(function (jwt) {
+          //console.log(data);
+          const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
+       
+            return fetch((url_validate), {
+              method: 'GET',
+              mode: 'no-cors'
+            })                                         // 第二个请求
+          
+        });
+      }
+    }).then(function (res) {
+      alert('2222222222222222');
+      console.log('第二请求');
+      console.log(res);
+    }).catch(function (err) {
+       console.log(err);
+    });
+
 
     // const login_user = decodeJWT(JWT);
 
@@ -100,7 +114,7 @@ class Login extends Component {
 
     // }
 
-   // window.location = "https://cner.herokuapp.com/";
+    // window.location = "https://cner.herokuapp.com/";
   }
 
   render() {
