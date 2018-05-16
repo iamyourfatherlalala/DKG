@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import fetch from 'isomorphic-fetch';
 
 function getJWT(username, password) {
   let JWT = '';
@@ -65,36 +66,57 @@ class Login extends Component {
 
   handleSubmit() {
     const { username, password, jwt } = this.state;
-   // const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
     const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}`;
 
     //const JWT = getJWT(username, password);
 
 
-    fetch((url), {
+    fetch((proxyurl + url), {
       method: 'GET',
-      mode: 'no-cors'
-    }).then(function (res) {
-      if (res.ok) {
-        // return
-        return res.json().then(function (jwt) {
-          //console.log(data);
-          const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
-       
-            return fetch((url_validate), {
-              method: 'GET',
-              mode: 'no-cors'
-            })                                         // 第二个请求
+      // headers : { 
+      //   'Content-Type': 'application/json',
+      //   'Accept': 'application/json'
+      //  }
+    //   headers: {
+    //     "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    // },
+      //mode: 'no-cors'
+    }).then((res) => {
+      // if (res.ok) {
+      //   return res.json().then((jwt) => {
+      //     //console.log(data);
+      //     const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
+      //     console.log('url_validate: ' + url_validate);
+      //       return fetch((proxyurl + url_validate), {
+      //         method: 'GET',
+      //         mode: 'no-cors'
+      //       }).then((res) => {
+      //          if(res.ok) {
+      //            console.log('user_info: ' + res.json());
+      //            return res.json();
+      //          }
+      //       }
+      //       )                                         // 第二个请求,返回的是一个js对象
           
-        });
-      }
-    }).then(function (res) {
-      alert('2222222222222222');
-      console.log('第二请求');
-      console.log(res);
-    }).catch(function (err) {
-       console.log(err);
-    });
+      //   });
+      // }   
+      if(res.ok){
+      //  console.log('My JWT:', res.headers.get('jwt'));
+      console.log(res.body);
+        return res;
+      }               
+    }).then( (data) => {
+          console.log('fuck: '+ data);
+    })
+    // }).then((login_user) => {
+    //   // console.log(login_user);
+    //   alert('2222222222222222');
+    //   console.log('第二请求');
+      
+    // }).catch((err) => {
+    //    console.log(err);
+    // });
 
 
     // const login_user = decodeJWT(JWT);
