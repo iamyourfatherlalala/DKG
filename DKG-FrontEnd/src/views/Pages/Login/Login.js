@@ -3,50 +3,6 @@ import { Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGro
 import { Link } from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 
-function getJWT(username, password) {
-  let JWT = '';
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-  const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}`;
-  fetch((proxyurl + url), {
-    method: 'GET',
-    // credentials: 'same-origin'    
-  })
-    .then((response) => {
-      console.log(response)
-      // JWT = response;
-      // console.log(JWT);
-      alert('111111111111111111')
-
-    }).catch((error) => {
-      console.log(error);
-    });
-  return JWT;
-}
-
-function decodeJWT(jwt) {
-  let login_user = {};
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  const url = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
-  fetch((proxyurl + url), {
-    method: 'GET',
-    // credentials: 'same-origin'    
-  })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response;
-    }).then((response) => {
-      login_user = response;
-      console.log(login_user);
-      alert('解密成功！！！！');
-
-    }).catch((error) => {
-      console.log(error);
-    });
-  return login_user;
-}
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -69,74 +25,50 @@ class Login extends Component {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
     const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}`;
 
-    //const JWT = getJWT(username, password);
-
-
     fetch((proxyurl + url), {
       method: 'GET',
-      // headers : { 
-      //   'Content-Type': 'application/json',
-      //   'Accept': 'application/json'
-      //  }
-    //   headers: {
-    //     "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-    // },
-      //mode: 'no-cors'
     }).then((res) => {
-      // if (res.ok) {
-      //   return res.json().then((jwt) => {
-      //     //console.log(data);
-      //     const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${jwt}`;
-      //     console.log('url_validate: ' + url_validate);
-      //       return fetch((proxyurl + url_validate), {
-      //         method: 'GET',
-      //         mode: 'no-cors'
-      //       }).then((res) => {
-      //          if(res.ok) {
-      //            console.log('user_info: ' + res.json());
-      //            return res.json();
-      //          }
-      //       }
-      //       )                                         // 第二个请求,返回的是一个js对象
-          
-      //   });
-      // }   
-      if(res.ok){
-      //  console.log('My JWT:', res.headers.get('jwt'));
-      console.log(res.body);
-        return res;
-      }               
-    }).then( (data) => {
-          console.log('fuck: '+ data);
+      if (res.ok) {
+        return res.text();
+      }
     })
-    // }).then((login_user) => {
-    //   // console.log(login_user);
-    //   alert('2222222222222222');
-    //   console.log('第二请求');
-      
-    // }).catch((err) => {
-    //    console.log(err);
-    // });
+      .then((JWT) => {
+        if (JWT != 'false') {
+          const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${JWT}`;
+          console.log(url_validate);
+          fetch((proxyurl + url_validate), {
+            method: 'GET',
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+            })
+            .then((login_user) => {
+              console.log(login_user);
+              console.log(new Date().getTime());
+              if (login_user['permit'][1] == '1') {
+                window.location = "https://cner.herokuapp.com/";
+              } 
+              else {
+                alert('没有权限登入该系统！');
+                //return Promise.reject();
+              }
 
+            })
+            // .catch(err => console.log(err));
+        }                                            //to judge if jwt presents for 'false'
+        else {
+          alert('用户名或者密码输入错误');
+         // return Promise.reject();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    // const login_user = decodeJWT(JWT);
-
-    // if input the username or password by mistake
-    // if (JWT == 'false') {
-    //   alert('用户名或者密码错误');
-    // } else {
-    //   const login_user = decodeJWT(JWT);
-    //   // store the login info in localstorage, deal with the second system
     //   localStorage.setItem('jwt', JWT);
-    //   if (login_user['permit'][1] == '1') {
-    //     window.location = "https://cner.herokuapp.com/";
-    //   } else {
-    //     alert('没有权限登入该系统！');
-    //   }
 
-    // }
-
-    // window.location = "https://cner.herokuapp.com/";
   }
 
   render() {
