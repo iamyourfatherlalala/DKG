@@ -48,7 +48,9 @@ class Login extends Component {
               console.log(login_user);
               console.log(new Date().getTime());
               if (login_user['permit'][1] == '1') {
+                localStorage.setItem('jwt', JWT);
                 window.location = "https://cner.herokuapp.com/";
+               // console.log();
               } 
               else {
                 alert('没有权限登入该系统！');
@@ -67,7 +69,10 @@ class Login extends Component {
         console.log(err);
       });
 
-    //   localStorage.setItem('jwt', JWT);
+    //  var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
+    // headers: {
+    //   'Authorization': 'Bearer ' + DEMO_TOKEN
+    // }
 
   }
 

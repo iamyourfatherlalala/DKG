@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Container, Row, Col, Card, CardBody, CardFooter, Button, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reactstrap';
+import React, { Component } from 'react';
+import { Container, Row, Col, Card, CardBody, CardFooter, Button, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 
 class Register extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ class Register extends Component {
     this.state = {
       username: '',
       password: '',
-      jwt: ''
+      confirm_password: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,30 +19,32 @@ class Register extends Component {
   }
 
   handleSubmit() {
-    const { username, password, jwt } = this.state;
-    window.location = "https://cner.herokuapp.com/";
-    // const JWT = getJWT(username, password);
-    // // const login_user = decodeJWT(jwt);
+    const { username, password, confirm_password } = this.state;
+    if (password != confirm_password) {
+      alert('请保持前后输入的密码一致');
+      this.setState({username: '', password: '', confirm_password: ''});
+    } else {
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+      const url = `http://yangjh.abc6.net:8325/simple/add?usr=${username}&psw=${password}`;
+      fetch((proxyurl + url), {
+        method: 'POST',
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      }).then((user) => {
+        window.location = "https://cner.herokuapp.com/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    // // if input the username or password by mistake
-    // if (JWT == 'false') {
-    //   alert('用户名或者密码错误');
-    // } else {
-    //   const login_user = decodeJWT(JWT);
-    //   // store the login info in localstorage, deal with the second system
-    //   localStorage.setItem('jwt', JWT);
-    //   if (login_user['permit'][1] == '1') {
-    //     window.location = "https://cner.herokuapp.com/";
-    //   } else {
-    //     alert('没有权限登入该系统！');
-    //   }
-
-    // }
+    }
 
   }
 
   render() {
-    const { username, password, jwt } = this.state;
+    const { username, password, confirm_password } = this.state;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -74,7 +76,7 @@ class Register extends Component {
                         <i className="icon-lock"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input type="password" name="password" value={password} placeholder="再次确认密码" onChange={this.handleChange} />
+                    <Input type="password" name="confirm_password" value={confirm_password} placeholder="再次确认密码" onChange={this.handleChange} />
                   </InputGroup>
                   {/* <Button color="success" block onClick={()=> this.props.history.push('/content')}>创建账号</Button> */}
                   <Button onClick={this.handleSubmit} color="primary" className="px-4">确认</Button>
