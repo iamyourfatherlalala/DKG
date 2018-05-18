@@ -74,6 +74,9 @@ class Login extends Component {
     //   'Authorization': 'Bearer ' + DEMO_TOKEN
     // }
 
+    //  // Redirect to the single-page application
+    //  window.location.href = '/'
+
   }
 
   render() {

@@ -11,6 +11,7 @@ export default {
         {
             divider: true
         },
+
         {
             name: '术语管理',
             url: '/concept',
@@ -19,6 +20,7 @@ export default {
         {
             divider: true
         },
+
         {
             name: '系统管理',
             icon: 'icon-puzzle',
@@ -42,6 +44,7 @@ export default {
         {
             divider: true
         },
+
         {
             name: '实体管理',
             url: '/entity',
@@ -50,9 +53,19 @@ export default {
         {
             divider: true
         },
+        
         {
             name: '事件管理',
             url: '/events',
+            icon: 'icon-star'
+        },
+        {
+            divider: true
+        },
+
+        {
+            name: '命名实体识别',
+            url: '/namedEntityRecognition',
             icon: 'icon-star'
         },
         {

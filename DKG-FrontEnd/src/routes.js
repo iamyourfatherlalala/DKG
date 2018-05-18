@@ -12,6 +12,7 @@ const routes = {
   '/entity': '实体管理',
   '/entity-query-by-name': '根据名字获取实体',
   '/entity-query-by-concept': '根据概念获取实体',
+  '/namedEntityRecognition': '命名实体识别',
   '/base': 'Base',
   '/base/cards': 'Cards',
   '/base/forms': 'Forms',

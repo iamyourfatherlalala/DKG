@@ -29,7 +29,8 @@ import EntityQueryByName from '../../components/EntityQueryByName/';
 
 import AuthorityManagement from '../../components/AuthorityManagement/';
 import SearchUsers from '../../components/SearchUsers/';
-import Events from '../../components/Events/';
+import Events from '../../components/Events/'; 
+import NamedEntityRecognition from '../../components/NamedEntityRecognition/';
 
 // Base
 import Cards from '../../views/Base/Cards/';
@@ -91,6 +92,9 @@ class Full extends Component {
                 <Route path="/authorityManagement" name="用户列表" component={AuthorityManagement}/>
                 <Route path="/searchUsers" name="搜索用户" component={SearchUsers}/>
                 <Route path="/events" name="事件管理" component={Events}/>
+
+                <Route path="/namedEntityRecognition" name="命名实体识别" component={NamedEntityRecognition}/>
+
                 {/* //////////////////////////////////////////////////////////////////////// */}
 
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
