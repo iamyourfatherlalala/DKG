@@ -33,7 +33,7 @@ class Register extends Component {
           return res.json();
         }
       }).then((user) => {
-        window.location = "https://cner.herokuapp.com/";
+        window.location = "https://cner.herokuapp.com/";       //document.location.href
       })
       .catch((err) => {
         console.log(err);

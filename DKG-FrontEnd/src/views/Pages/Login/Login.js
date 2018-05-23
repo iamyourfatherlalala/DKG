@@ -22,10 +22,11 @@ class Login extends Component {
 
   handleSubmit() {
     const { username, password, jwt } = this.state;
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-    const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}`;
-
-    fetch((proxyurl + url), {
+    // const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+    // http://localhost:9001/#/login?service=http://cner.herokuapp.com/list
+    const service = document.location.href.split('=')[1];
+    const url = `http://yangjh.abc6.net:8325/simple/login?usr=${username}&psw=${password}&service=${service}`;
+    fetch((url), {
       method: 'GET',
     }).then((res) => {
       if (res.ok) {
@@ -33,39 +34,40 @@ class Login extends Component {
       }
     })
       .then((JWT) => {
-        if (JWT != 'false') {
-          const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${JWT}`;
-          console.log(url_validate);
-          fetch((proxyurl + url_validate), {
-            method: 'GET',
-          })
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              }
-            })
-            .then((login_user) => {
-              console.log(login_user);
-              console.log(new Date().getTime());
-              if (login_user['permit'][1] == '1') {
-                localStorage.setItem('jwt', JWT);
-                window.location = "https://cner.herokuapp.com/";
-               // console.log();
-              } 
-              else {
-                alert('没有权限登入该系统！');
-                //return Promise.reject();
-              }
-
-            })
-            // .catch(err => console.log(err));
+        if (JWT.length > 10) {
+          let url = `${service}?token=${JWT}`;
+          document.location = url;
+          // const url_validate = `http://yangjh.abc6.net:8325/simple/validate/${JWT}`;
+          // console.log(url_validate);
+          // fetch((url_validate), {
+          //   method: 'GET',
+          // })
+          //   .then((res) => {
+          //     if (res.ok) {
+          //       return res.json();
+          //     }
+          //   })
+          //   .then((login_user) => {
+          //     console.log(login_user);
+          //     console.log(new Date().getTime());
+          //     if (login_user['permit'][1] == '1') {
+          //       localStorage.setItem('jwt', JWT);
+          //       window.location = "https://cner.herokuapp.com/";
+          //      // console.log();
+          //     } 
+          //     else {
+          //       alert('没有权限登入该系统！');
+          //       //return Promise.reject();
+          //     }
+          // .catch(err => console.log(err));
+            localStorage.setItem('jwt', JWT);
         }                                            //to judge if jwt presents for 'false'
         else {
-          alert('用户名或者密码输入错误');
-         // return Promise.reject();
+          alert(JWT);
+          // console.log();
+          // return Promise.reject();
         }
-      })
-      .catch((err) => {
+      }).catch((err) => {
         console.log(err);
       });
 
