@@ -26,27 +26,107 @@ const data = [
     },
 ];
 
+//the component which deals with the selection of the table
 class MyRow extends React.Component {
     constructor(props) {
         super(props);
+        this.state ={
+        Modal_id: 0,
+        Modal_title: '',
+        Modal_date: '',
+        Modal_url: '',
+        Modal_content: ''
+        };
         this.onClick = this.onClick.bind(this);
-      }
+        this.showContent = this.showContent.bind(this);
+    }
 
     onClick(e) {
         const { onClick, rowId, data } = this.props;
         onClick(rowId, e);
+        this.setState({ 
+            Modal_id: data.id, 
+            Modal_title: data.title, 
+            Modal_date: data.date,
+            Modal_url: data.url,
+        });
+
+        console.log(data.id);
+       
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        const url = `http://cner.herokuapp.com/detail/${data.id}`
+        fetch((proxyurl + url), {
+            method: 'GET',  
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                response.json().then((data) => {
+                    console.log(data);
+                    this.setState({  Modal_content: data['content'] });
+                });
+            }).catch((error) => {
+                console.log(error);
+            });
         console.log(data);
     }
 
+    showContent() {
+        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content } = this.state;
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";  
+        const url = `http://cner.herokuapp.com/single2`
+        fetch((proxyurl + url), {
+            method: 'POST',    
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(Modal_content)
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                response.json().then((data) => {
+                    console.log(data);
+                });
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
     render() {
+        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content } = this.state;
         const { data, active } = this.props;
         return (
-            <Table.Row onClick={this.onClick} active={active}>
-                <Table.Cell>{data.id}</Table.Cell>
-                <Table.Cell>{data.date}</Table.Cell>
-                <Table.Cell >{data.code}</Table.Cell>
-                <Table.Cell >{data.title}</Table.Cell>
-            </Table.Row>
+            <Modal size="tiny" trigger={
+                <Table.Row onClick={this.onClick} active={active}>
+                    <Table.Cell>{data.id}</Table.Cell>
+                    <Table.Cell>{data.date}</Table.Cell>
+                    <Table.Cell >{data.code}</Table.Cell>
+                    <Table.Cell >{data.title}</Table.Cell>
+                </Table.Row>
+            }>
+
+            <Modal.Header>{Modal_title}</Modal.Header>
+
+                <Modal.Content scrolling style={{ whiteSpace: 'pre-wrap' }}>
+                    <Modal.Description>
+                        <Header>{Modal_title}</Header>
+                        <p>{Modal_date}</p>
+                        <a className="ui blue button" href={'http://www.cninfo.com.cn/' + Modal_url} target="_blank">下载公告</a>
+                        <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
+                    </Modal.Description>
+                    {Modal_content}
+                </Modal.Content>
+
+                {/* <Modal.Actions>
+
+                </Modal.Actions> */}
+
+            </Modal>
         );
     }
 }
@@ -102,10 +182,11 @@ export default class NamedEntityRecognition extends React.Component {
     onRowClick(id, e) {
         const { activeRows } = this.state;
         const nextRows = {
-           // ...activeRows,
+            // ...activeRows,
             [id]: !activeRows[id]
         }
         this.setState({ activeRows: nextRows });
+       // console.log(activeRows);
     }
 
     render() {
@@ -133,67 +214,7 @@ export default class NamedEntityRecognition extends React.Component {
                             </Table.Row>
                         </Table.Header>
 
-                        <Modal size="large" trigger={
-                            // <Table.Body>
-                            //     {allData.map(data => <Table.Row key={data.id} onClick={this.handleRowClick(data)}>
-                            //         <Table.Cell children={data.id}></Table.Cell>
-                            //         <Table.Cell children={data.date}></Table.Cell>
-                            //         <Table.Cell children={data.code}></Table.Cell>
-                            //         <Table.Cell children={data.title}></Table.Cell>
-                            //     </Table.Row>)}
-                            // </Table.Body>
-                            <Table.Body>
-                            {
-                                allData.map((u) => {
-                                    const isActive = activeRows[u.id];
-                                    return (
-                                        <MyRow
-                                            active={isActive}
-                                            key={u.id}
-                                            rowId={u.id}
-                                            data={u}
-                                            onClick={this.onRowClick}
-                                        />
-                                    );
-                                })
-                            }
-
-                        </Table.Body>
-
-                        }>
-
-                            <Modal.Header>Profile Picture</Modal.Header>
-
-                            <Modal.Content>
-                                <Modal.Description>
-                                    <Header>Modal Header</Header>
-                                    <p>This is an example of expanded content that will cause the modal's dimmer to scroll</p>
-                                    <a className="ui blue button" id="m-a" target="_blank">下载公告</a>
-                                    <button className="ui green button" id="m-ner">实体识别</button>
-                                    <Button primary>
-                                        Proceed <Icon name='right chevron' />
-                                    </Button>
-                                </Modal.Description>
-                            </Modal.Content>
-
-                            <Modal.Actions>
-                
-                            </Modal.Actions>
-
-                        </Modal>
-                    </Table>
-                </div>
-
-                {/* <div>
-                    <Table selectable sortable celled>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell sorted="descending">公告id</Table.HeaderCell>
-                                <Table.HeaderCell>日期</Table.HeaderCell>
-                                <Table.HeaderCell>代码</Table.HeaderCell>
-                                <Table.HeaderCell>标题</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
+                        {/* <Modal size="large" trigger={ */}
                         <Table.Body>
                             {
                                 allData.map((u) => {
@@ -211,8 +232,27 @@ export default class NamedEntityRecognition extends React.Component {
                             }
 
                         </Table.Body>
+
+                        {/* // }>
+
+                        //     <Modal.Header>Profile Picture</Modal.Header>
+
+                        //     <Modal.Content>
+                        //         <Modal.Description>
+                        //             <Header>Modal Header</Header>
+                        //             <p>This is an example of expanded content that will cause the modal's dimmer to scroll</p>
+                        //             <a className="ui blue button" id="m-a" target="_blank">下载公告</a>
+                        //             <button className="ui green button" id="m-ner">实体识别</button>
+                        //         </Modal.Description>
+                        //     </Modal.Content>
+
+                        //     <Modal.Actions>
+                
+                        //     </Modal.Actions>
+
+                        // </Modal> */}
                     </Table>
-                </div> */}
+                </div>
 
             </div>
         )
