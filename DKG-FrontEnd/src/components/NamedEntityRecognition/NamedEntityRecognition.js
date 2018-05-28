@@ -5,37 +5,28 @@ import { Button, Icon, Input, Menu, Segment, Search, Form, Header, Modal, Table 
 // import { Pagination } from 'antd';
 // import 'antd/dist/antd.css';
 
-const data = [
-    {
-        "id": 1,
-        "data": "000",
-        "code": "000",
-        "title": "000"
-    },
-    {
-        "id": 2,
-        "data": "111",
-        "code": "111",
-        "title": "111"
-    },
-    {
-        "id": 3,
-        "data": "222",
-        "code": "222",
-        "title": "222"
-    },
-];
+function make_output(text, response, html) {
+    html.text('');
+    let begin = 0;
+    response.forEach(function (value) {
+        html.append(text.slice(begin, value[0]));
+        let span = text.slice(value[0], value[1]);
+        html.append(`<span class="${value[2]}">${span}</span>`);
+        begin = value[1];
+    });
+    html.append(text.slice(begin));
+}
 
 //the component which deals with the selection of the table
 class MyRow extends React.Component {
     constructor(props) {
         super(props);
-        this.state ={
-        Modal_id: 0,
-        Modal_title: '',
-        Modal_date: '',
-        Modal_url: '',
-        Modal_content: ''
+        this.state = {
+            Modal_id: 0,
+            Modal_title: '',
+            Modal_date: '',
+            Modal_url: '',
+            Modal_content: '',
         };
         this.onClick = this.onClick.bind(this);
         this.showContent = this.showContent.bind(this);
@@ -44,19 +35,19 @@ class MyRow extends React.Component {
     onClick(e) {
         const { onClick, rowId, data } = this.props;
         onClick(rowId, e);
-        this.setState({ 
-            Modal_id: data.id, 
-            Modal_title: data.title, 
+        this.setState({
+            Modal_id: data.id,
+            Modal_title: data.title,
             Modal_date: data.date,
             Modal_url: data.url,
         });
 
         console.log(data.id);
-       
+
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
         const url = `http://cner.herokuapp.com/detail/${data.id}`
         fetch((proxyurl + url), {
-            method: 'GET',  
+            method: 'GET',
         })
             .then(function (response) {
                 if (!response.ok) {
@@ -66,7 +57,7 @@ class MyRow extends React.Component {
             }).then((response) => {
                 response.json().then((data) => {
                     console.log(data);
-                    this.setState({  Modal_content: data['content'] });
+                    this.setState({ Modal_content: data['content'] });
                 });
             }).catch((error) => {
                 console.log(error);
@@ -76,11 +67,11 @@ class MyRow extends React.Component {
 
     showContent() {
         const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content } = this.state;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";  
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = `http://cner.herokuapp.com/single2`
         fetch((proxyurl + url), {
-            method: 'POST',    
-            headers: {'Content-Type':'application/json'},
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(Modal_content)
         })
             .then(function (response) {
@@ -90,6 +81,10 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
+
+               //     make_output(Modal_content, response, content);
+             
+
                     console.log(data);
                 });
             }).catch((error) => {
@@ -110,7 +105,7 @@ class MyRow extends React.Component {
                 </Table.Row>
             }>
 
-            <Modal.Header>{Modal_title}</Modal.Header>
+                <Modal.Header>{Modal_title}</Modal.Header>
 
                 <Modal.Content scrolling style={{ whiteSpace: 'pre-wrap' }}>
                     <Modal.Description>
@@ -120,6 +115,7 @@ class MyRow extends React.Component {
                         <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
                     </Modal.Description>
                     {Modal_content}
+                     {/* this.state.Modal_content.map(function(value,index,array){<br>//代码片段<br>}.bind(this)) */}
                 </Modal.Content>
 
                 {/* <Modal.Actions>
@@ -186,7 +182,7 @@ export default class NamedEntityRecognition extends React.Component {
             [id]: !activeRows[id]
         }
         this.setState({ activeRows: nextRows });
-       // console.log(activeRows);
+        // console.log(activeRows);
     }
 
     render() {
