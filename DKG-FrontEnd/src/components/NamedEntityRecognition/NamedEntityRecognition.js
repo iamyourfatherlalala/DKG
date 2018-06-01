@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Scheme from '../Scheme';
 import 'semantic-ui-css/semantic.min.css';
+import './style.css'
 import { Button, Icon, Input, Menu, Segment, Search, Form, Header, Modal, Table } from 'semantic-ui-react';
 // import { Pagination } from 'antd';
 // import 'antd/dist/antd.css';
@@ -27,6 +28,7 @@ class MyRow extends React.Component {
             Modal_date: '',
             Modal_url: '',
             Modal_content: '',
+            style_array: []
         };
         this.onClick = this.onClick.bind(this);
         this.showContent = this.showContent.bind(this);
@@ -66,7 +68,7 @@ class MyRow extends React.Component {
     }
 
     showContent() {
-        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content } = this.state;
+        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content, style_array } = this.state;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = `http://cner.herokuapp.com/single2`
         fetch((proxyurl + url), {
@@ -81,10 +83,23 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
+                    let content = Modal_content;
+                    //   make_output(content.text(), data, content);
 
-               //     make_output(Modal_content, response, content);
-             
+                    //   html.text('');
+                    //   let begin = 0;
+                    //   data.forEach(function (value) {
+                    //       html.append(text.slice(begin, value[0]));
+                    //       let span = text.slice(value[0], value[1]);
+                    //       html.append(`<span class="${value[2]}">${span}</span>`);
+                    //       begin = value[1];
+                    //   });
+                    //   html.append(text.slice(begin));
 
+
+                    console.log(content);
+
+                    this.setState({ style_array: data });
                     console.log(data);
                 });
             }).catch((error) => {
@@ -93,7 +108,7 @@ class MyRow extends React.Component {
     }
 
     render() {
-        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content } = this.state;
+        const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content, style_array } = this.state;
         const { data, active } = this.props;
         return (
             <Modal size="tiny" trigger={
@@ -115,7 +130,21 @@ class MyRow extends React.Component {
                         <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
                     </Modal.Description>
                     {Modal_content}
-                     {/* this.state.Modal_content.map(function(value,index,array){<br>//代码片段<br>}.bind(this)) */}
+                    {/* this.state.Modal_content.map(function(value,index,array){<br>//代码片段<br>}.bind(this)) */}
+                    {function(){
+                       console.log(style_array);
+                        Modal_content.text('');
+                          let begin = 0;
+                          style_array.forEach(function (value) {
+                            Modal_content.append(Modal_content.text().slice(begin, value[0]));
+                              let span = Modal_content.text().slice(value[0], value[1]);
+                              Modal_content.append(`<span class="${value[2]}">${span}</span>`);
+                              begin = value[1];
+                          });
+                          Modal_content.append(Modal_content.text().slice(begin));
+                          return Modal_content;
+                           
+                    }}
                 </Modal.Content>
 
                 {/* <Modal.Actions>
@@ -133,14 +162,19 @@ export default class NamedEntityRecognition extends React.Component {
         this.state = {
             allData: [],
             inputValue: '',
-            activeRows: []
+            activeRows: [],
+            currentPage: 1,
+            start_date: '',
+            end_date: ''
         }
         this.getInputValue = this.getInputValue.bind(this);
         this.getNamedEntityRecognition = this.getNamedEntityRecognition.bind(this);
         this.onRowClick = this.onRowClick.bind(this);
+        this.moveForward = this.moveForward.bind(this);
+        this.moveBack = this.moveBack.bind(this);
     }
 
-    componentWillMount() {
+    componentWillMount(e) {
 
     }
 
@@ -149,9 +183,12 @@ export default class NamedEntityRecognition extends React.Component {
     }
 
     getNamedEntityRecognition() {
-        const { allData, inputValue, activeRows } = this.state;
+        this.setState({ currentPage: 1 });          // initialize the currentPage
+        // this.setState({ currentPage: 1, inputValue: '' });          
+        const { allData, inputValue, activeRows, currentPage, start_date, end_date } = this.state;
+        console.log(currentPage);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=1&limit=20`
+        const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${currentPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
         fetch((proxyurl + url), {
             method: 'GET',
             // credentials: 'same-origin'    
@@ -175,6 +212,67 @@ export default class NamedEntityRecognition extends React.Component {
             });
     }
 
+    moveBack() {
+        const { allData, inputValue, activeRows, currentPage, start_date, end_date } = this.state;
+        if (currentPage > 1) {
+            let newPage = currentPage - 1;
+            this.setState({ currentPage: newPage });
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+            const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
+            fetch((proxyurl + url), {
+                method: 'GET',
+                // credentials: 'same-origin'    
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response;
+                }).then((response) => {
+                    response.json().then((data) => {
+                        for (let i = 0; i < data.length; i++) {
+                            let date = new Date(data[i]['date']);
+                            data[i]['date'] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+                        }
+                        console.log(data);
+                        this.setState({ allData: data });
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
+    }
+
+    moveForward() {
+        const { allData, inputValue, activeRows, currentPage, start_date, end_date } = this.state;
+        let newPage = currentPage + 1;
+        this.setState({ currentPage: newPage });
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
+        fetch((proxyurl + url), {
+            method: 'GET',
+            // credentials: 'same-origin'    
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            }).then((response) => {
+                response.json().then((data) => {
+                    for (let i = 0; i < data.length; i++) {
+                        let date = new Date(data[i]['date']);
+                        data[i]['date'] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+                    }
+                    console.log(data);
+                    this.setState({ allData: data });
+                });
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
+
     onRowClick(id, e) {
         const { activeRows } = this.state;
         const nextRows = {
@@ -186,7 +284,7 @@ export default class NamedEntityRecognition extends React.Component {
     }
 
     render() {
-        const { allData, inputValue, activeRows } = this.state;
+        const { allData, inputValue, activeRows, currentPage, start_date, end_date } = this.state;
 
         return (
             <div>
@@ -194,7 +292,11 @@ export default class NamedEntityRecognition extends React.Component {
                     <Form onSubmit={this.getNamedEntityRecognition}>
                         <Form.Group>
                             <Form.Input placeholder='请输入名字' name='inputValue' value={this.state.inputValue} onChange={this.getInputValue} />
-                            <Form.Button content='搜索' />
+                            <div className="ui label date-label">开始时间</div>
+                            <Form.Input type="date" name='start_date' value={this.state.start_date} onChange={this.getInputValue} />
+                            <div className="ui label date-label">结束时间</div>
+                            <Form.Input type="date" name='end_date' value={this.state.end_date} onChange={this.getInputValue} />
+                            <Form.Button primary content='搜索' />
                         </Form.Group>
                     </Form>
                 </div>
@@ -229,24 +331,20 @@ export default class NamedEntityRecognition extends React.Component {
 
                         </Table.Body>
 
-                        {/* // }>
-
-                        //     <Modal.Header>Profile Picture</Modal.Header>
-
-                        //     <Modal.Content>
-                        //         <Modal.Description>
-                        //             <Header>Modal Header</Header>
-                        //             <p>This is an example of expanded content that will cause the modal's dimmer to scroll</p>
-                        //             <a className="ui blue button" id="m-a" target="_blank">下载公告</a>
-                        //             <button className="ui green button" id="m-ner">实体识别</button>
-                        //         </Modal.Description>
-                        //     </Modal.Content>
-
-                        //     <Modal.Actions>
-                
-                        //     </Modal.Actions>
-
-                        // </Modal> */}
+                        <Table.Footer>
+                            <Table.Row>
+                                <Table.HeaderCell colSpan='4'>
+                                    <Menu floated='right' pagination>
+                                        <Menu.Item as='button' onClick={this.moveBack} icon>
+                                            <Icon name='chevron left' />
+                                        </Menu.Item>
+                                        <Menu.Item as='button' onClick={this.moveForward} icon>
+                                            <Icon name='chevron right' />
+                                        </Menu.Item>
+                                    </Menu>
+                                </Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Footer>
                     </Table>
                 </div>
 
