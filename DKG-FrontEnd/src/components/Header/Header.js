@@ -9,6 +9,7 @@ import {
   Badge
 } from 'reactstrap';
 import HeaderDropdown from './HeaderDropdown';
+import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 
 class Header extends Component {
 
@@ -62,7 +63,14 @@ class Header extends Component {
             <NavLink href="#"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
           </NavItem>
           <HeaderDropdown/>
+          <NavItem className="d-md-down-none">
+            <NavLink href="#"><i className="icon-list"></i><Badge pill color="danger"></Badge></NavLink>
+          </NavItem>
+          <NavItem className="d-md-down-none">
+            <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
+          </NavItem>
         </Nav>
+        <AppAsideToggler className="d-md-down-none" />
       </header>
     );
   }

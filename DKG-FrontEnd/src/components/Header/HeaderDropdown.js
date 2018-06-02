@@ -31,20 +31,21 @@ class HeaderDropdown extends Component {
         <DropdownToggle nav>
           <img src={'img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
         </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-          <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
+        <DropdownMenu right style={{ right: 'auto' }}>
+          <DropdownItem header tag="div" className="text-center"><strong>账号</strong></DropdownItem>
+          <DropdownItem><i className="fa fa-user"></i> 个人资料</DropdownItem>
+          {/* <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem>
-          <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
+          <DropdownItem header tag="div" className="text-center"><strong>设置</strong></DropdownItem>
           <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
           <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
           <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
           <DropdownItem divider/>
-          <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-          <DropdownItem onClick={() => this.props.history.push('/login')}><i className="fa fa-lock"></i> Logout</DropdownItem>
+          <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem> */}
+          <DropdownItem onClick={() => this.props.history.push('/login')}><i className="fa fa-lock"></i>退出当前的账号</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );

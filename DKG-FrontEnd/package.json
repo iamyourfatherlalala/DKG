@@ -1,5 +1,5 @@
 {
-  "name": "@coreui/react",
+  "name": "DKG",
   "version": "1.0.10",
   "description": "Open Source Bootstrap Admin Template",
   "author": "Łukasz Holeczek",
@@ -39,6 +39,7 @@
   "dependencies": {
     "@casl/ability": "^2.1.0",
     "@casl/react": "^0.4.0",
+    "@coreui/react": "^2.0.0",
     "bootstrap": "4.0.0",
     "chart.js": "2.7.1",
     "cytoscape": "^3.2.11",

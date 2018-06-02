@@ -6,16 +6,10 @@ import { Button, Icon, Input, Menu, Segment, Search, Form, Header, Modal, Table 
 // import { Pagination } from 'antd';
 // import 'antd/dist/antd.css';
 
-function make_output(text, response, html) {
-    html.text('');
-    let begin = 0;
-    response.forEach(function (value) {
-        html.append(text.slice(begin, value[0]));
-        let span = text.slice(value[0], value[1]);
-        html.append(`<span class="${value[2]}">${span}</span>`);
-        begin = value[1];
-    });
-    html.append(text.slice(begin));
+function htmlDecode(input){
+    var e = document.createElement('div');
+    e.innerHTML = input;
+    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
 }
 
 //the component which deals with the selection of the table
@@ -58,7 +52,7 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
-                    console.log(data);
+                  //  console.log(data);
                     this.setState({ Modal_content: data['content'] });
                 });
             }).catch((error) => {
@@ -83,24 +77,39 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
-                    let content = Modal_content;
-                    //   make_output(content.text(), data, content);
-
-                    //   html.text('');
-                    //   let begin = 0;
-                    //   data.forEach(function (value) {
-                    //       html.append(text.slice(begin, value[0]));
-                    //       let span = text.slice(value[0], value[1]);
-                    //       html.append(`<span class="${value[2]}">${span}</span>`);
-                    //       begin = value[1];
-                    //   });
-                    //   html.append(text.slice(begin));
-
-
-                    console.log(content);
-
-                    this.setState({ style_array: data });
+                  
+                    //console.log(Modal_content);
                     console.log(data);
+
+                    let result_text = '';
+                    let fixed_content = Modal_content;
+                    console.log(fixed_content);
+                    let begin = 0;
+
+                    data.forEach(function (value) {
+                        // result_text.append(fixed_content.slice(begin, value[0]));
+                        result_text += fixed_content.slice(begin, value[0]);
+                        let span = fixed_content.slice(value[0], value[1]);
+                        // result_text.append(`<span className="${value[2]}">${span}</span>`);
+                        if(value[2] == 'ORG'){
+                            result_text += `<span style="background-color: lightpink;">${span}</span>`;
+                        }else if(value[2] == 'PER'){
+                            result_text += `<span style="background-color: khaki;">${span}</span>`;
+                        }else if(value[2] == 'LOC'){
+                            result_text += `<span style="background-color: paleturquoise;">${span}</span>`;
+                        }
+                       
+                        begin = value[1];
+                    });
+                    // result_text.append(fixed_content.slice(begin));
+                    result_text += fixed_content.slice(begin);
+                    console.log('12345678890' + result_text);
+                
+                   
+                    // console.log(content);
+
+                    this.setState({ style_array: data, Modal_content: result_text });
+               
                 });
             }).catch((error) => {
                 console.log(error);
@@ -122,29 +131,16 @@ class MyRow extends React.Component {
 
                 <Modal.Header>{Modal_title}</Modal.Header>
 
-                <Modal.Content scrolling style={{ whiteSpace: 'pre-wrap' }}>
+                <Modal.Content className="modal" scrolling style={{ whiteSpace: 'pre-wrap' }}>
                     <Modal.Description>
                         <Header>{Modal_title}</Header>
                         <p>{Modal_date}</p>
                         <a className="ui blue button" href={'http://www.cninfo.com.cn/' + Modal_url} target="_blank">下载公告</a>
                         <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
                     </Modal.Description>
-                    {Modal_content}
+                    <div dangerouslySetInnerHTML={{__html: Modal_content}} />
+                    {/* <div dangerouslySetInnerHTML={{__html: '<span style="background-color: lightpink;">王佳祺是天才</span>'}} /> */}
                     {/* this.state.Modal_content.map(function(value,index,array){<br>//代码片段<br>}.bind(this)) */}
-                    {function(){
-                       console.log(style_array);
-                        Modal_content.text('');
-                          let begin = 0;
-                          style_array.forEach(function (value) {
-                            Modal_content.append(Modal_content.text().slice(begin, value[0]));
-                              let span = Modal_content.text().slice(value[0], value[1]);
-                              Modal_content.append(`<span class="${value[2]}">${span}</span>`);
-                              begin = value[1];
-                          });
-                          Modal_content.append(Modal_content.text().slice(begin));
-                          return Modal_content;
-                           
-                    }}
                 </Modal.Content>
 
                 {/* <Modal.Actions>
