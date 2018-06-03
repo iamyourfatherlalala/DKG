@@ -1,0 +1,6 @@
+{
+    "name": "ResearchReportInquiry",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ResearchReportInquiry.js"
+  }

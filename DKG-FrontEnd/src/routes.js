@@ -13,6 +13,10 @@ const routes = {
   '/entity-query-by-name': '根据名字获取实体',
   '/entity-query-by-concept': '根据概念获取实体',
   '/namedEntityRecognition': '命名实体识别',
+  '/announcementInquiry': '公告查询',
+  '/newsInquiry': '新闻查询',
+  '/researchReportInquiry': '研报查询',
+  
   '/base': 'Base',
   '/base/cards': 'Cards',
   '/base/forms': 'Forms',

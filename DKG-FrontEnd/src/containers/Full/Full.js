@@ -27,6 +27,10 @@ import SchemeQueryByConcept from '../../components/SchemeQueryByConcept/';
 import EntityQueryByConcept from '../../components/EntityQueryByConcept/';
 import EntityQueryByName from '../../components/EntityQueryByName/';
 
+import AnnouncementInquiry from '../../components/AnnouncementInquiry/';
+import NewsInquiry from '../../components/NewsInquiry/';
+import ResearchReportInquiry from '../../components/ResearchReportInquiry/';
+
 import AuthorityManagement from '../../components/AuthorityManagement/';
 import SearchUsers from '../../components/SearchUsers/';
 import Events from '../../components/Events/'; 
@@ -94,7 +98,9 @@ class Full extends Component {
                 <Route path="/events" name="事件管理" component={Events}/>
 
                 <Route path="/namedEntityRecognition" name="命名实体识别" component={NamedEntityRecognition}/>
-
+                <Route path="/announcementInquiry" name="公告查询" component={AnnouncementInquiry}/>
+                <Route path="/newsInquiry" name="新闻查询" component={NewsInquiry}/>
+                <Route path="/researchReportInquiry" name="研报查询" component={ResearchReportInquiry}/>
                 {/* //////////////////////////////////////////////////////////////////////// */}
 
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>

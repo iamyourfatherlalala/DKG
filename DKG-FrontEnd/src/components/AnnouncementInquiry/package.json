@@ -1,0 +1,6 @@
+{
+    "name": "AnnouncementInquiry",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./AnnouncementInquiry.js"
+  }
