@@ -43,7 +43,7 @@ class NamedEntityRecognition extends Component {
             <Router>
                 <div>
                     
-                        <Menu pointing>
+                        <Menu style={{ marginTop: -1.55 + 'rem', marginLeft: -2.11 + 'rem', marginRight: -2.11 + 'rem',}} pointing>
                             <Menu.Item as={Link} to='/announcementInquiry' name='announcement_inquiry' active={activeItemNav === 'announcement_inquiry'} onClick={this.handleNavClick}>公告查询</Menu.Item>
                             <Menu.Item as={Link} to='/newsInquiry' name='news_inquiry' active={activeItemNav === 'news_inquiry'} onClick={this.handleNavClick}>新闻查询</Menu.Item>
                             <Menu.Item as={Link} to='/researchReportInquiry' name='research_report_inquiry' active={activeItemNav === 'research_report_inquiry'} onClick={this.handleNavClick}>研报查询</Menu.Item>

@@ -12,29 +12,29 @@ export default {
             divider: true
         },
 
-        {
-            name: '术语管理',
-            url: '/concept',
-            icon: 'icon-drop',
-        },
-        {
-            divider: true
-        },
+        // {
+        //     name: '术语管理',
+        //     url: '/concept',
+        //     icon: 'icon-drop',
+        // },
+        // {
+        //     divider: true
+        // },
 
-        {
-            name: '系统管理',
-            icon: 'icon-puzzle',
-            children: [
-                {
-                    name: '领域专家管理',
-                    url: '/domainExpert',
-                    icon: 'icon-pencil'
-                }
-            ]
-        },
-        {
-            divider: true
-        },
+        // {
+        //     name: '系统管理',
+        //     icon: 'icon-puzzle',
+        //     children: [
+        //         {
+        //             name: '领域专家管理',
+        //             url: '/domainExpert',
+        //             icon: 'icon-pencil'
+        //         }
+        //     ]
+        // },
+        // {
+        //     divider: true
+        // },
 
         {
             name: '模式管理',
@@ -72,25 +72,25 @@ export default {
             divider: true
         },
 
-        {
-            name: '权限管理',
-            icon: 'icon-puzzle',
-            children: [
-                {
-                    name: '用户列表',
-                    url: '/authorityManagement',
-                    icon: 'icon-pencil'
-                },
-                {
-                    name: '搜索用户',
-                    url: '/searchUsers',
-                    icon: 'icon-pencil'
-                }
-            ]
-        },
-        {
-            divider: true
-        },
+        // {
+        //     name: '权限管理',
+        //     icon: 'icon-puzzle',
+        //     children: [
+        //         {
+        //             name: '用户列表',
+        //             url: '/authorityManagement',
+        //             icon: 'icon-pencil'
+        //         },
+        //         {
+        //             name: '搜索用户',
+        //             url: '/searchUsers',
+        //             icon: 'icon-pencil'
+        //         }
+        //     ]
+        // },
+        // {
+        //     divider: true
+        // },
 
         /*
       {

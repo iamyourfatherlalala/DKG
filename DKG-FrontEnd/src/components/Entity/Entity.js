@@ -49,7 +49,7 @@ class Entity extends Component {
             <Router>
                 <div>
                     <div>
-                        <Menu pointing>
+                        <Menu style={{ marginTop: -1.55 + 'rem', marginLeft: -2.11 + 'rem', marginRight: -2.11 + 'rem',}} pointing>
                             <Menu.Item as={Link} to='/entity-query-by-name' name='entity_query_by_name' active={activeItemNav === 'entity_all_relations'} onClick={this.handleNavClick}>根据名字获取实体</Menu.Item>
                             <Menu.Item as={Link} to='/entity-query-by-concept' name='entity_query_by_concept' active={activeItemNav === 'entity_all_relations'} onClick={this.handleNavClick}>根据概念获取实体</Menu.Item>
                         </Menu>
