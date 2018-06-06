@@ -7,15 +7,17 @@ function addJobs(quantity) {
   const startId = jobs.length;
   for (let i = 0; i < quantity; i++) {
     const id = startId + i;
-    let priority = 'D';
-    if (i % 2 === 0) priority = 'C';
-    if (i % 5 === 0) priority = 'B';
-    if (i % 7 === 0) priority = 'A';
+    let priority = 'true';
+    if (i % 2 === 0) priority = 'false';
+    if (i % 5 === 0) priority = 'true';
+    if (i % 7 === 0) priority = 'false';
     jobs.push({
       id: id,
-      name: 'Item name ' + id,
-      priority: priority,
-      active: i%2 === 0 ? 'Y' : 'N'
+      name: 'user' + id,
+      password: id,
+      //priority: priority,
+      DKG: i % 2 === 0 ? 'Y' : 'N',
+      NER: i % 2 === 1 ? 'Y' : 'N'
     });
   }
 }
@@ -103,27 +105,32 @@ function priorityValidator(value) {
 export default class App extends React.Component {
   render() {
     return (
-      <BootstrapTable data={ jobs }
+      <BootstrapTable data={jobs}
         // trClassName={ trClassNameFormat }
-        selectRow={ selectRowProp }
-        cellEdit={ cellEditProp }
-        options={ options }
+        selectRow={selectRowProp}
+        cellEdit={cellEditProp}
+        options={options}
         insertRow
         deleteRow
         search
         columnFilter
         hover
         pagination>
-        <TableHeaderColumn dataField='id' dataAlign='center' dataSort isKey autoValue>Job ID</TableHeaderColumn>
+        <TableHeaderColumn dataField='id' dataAlign='center' dataSort isKey autoValue>ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name' className='good' dataSort
-          editable={ { type: 'textarea', validator: nameValidator } }>Job Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='priority' dataSort dataFormat={ priorityFormatter }
-          editable={ {
+          editable={{ type: 'textarea', validator: nameValidator }}>用户名</TableHeaderColumn>
+         <TableHeaderColumn dataField='password' className='good' dataSort
+          editable={{ type: 'textarea', validator: nameValidator }}>密码</TableHeaderColumn>
+        {/* <TableHeaderColumn dataField='priority' dataSort dataFormat={priorityFormatter}
+          editable={{
             type: 'select',
-            options: { values: [ 'A', 'B', 'C', 'D' ] },
-            validator: priorityValidator } }>Job Priority</TableHeaderColumn>
-        <TableHeaderColumn dataField='active'
-          editable={ { type: 'checkbox', options: { values: ' Y:N' } } }>Active</TableHeaderColumn>
+            options: { values: ['true', 'false'] },
+            validator: priorityValidator
+          }}>Job Priority</TableHeaderColumn> */}
+        <TableHeaderColumn dataField='DKG'
+          editable={{ type: 'checkbox', options: { values: ' Y:N' } }}>DKG权限</TableHeaderColumn>
+        <TableHeaderColumn dataField='NER'
+          editable={{ type: 'checkbox', options: { values: ' Y:N' } }}>NER权限</TableHeaderColumn>
       </BootstrapTable>
     );
   }

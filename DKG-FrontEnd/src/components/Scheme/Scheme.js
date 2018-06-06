@@ -74,8 +74,8 @@ class Scheme extends Component {
           <div>
             <Menu style={{ marginTop: -1.55 + 'rem', marginLeft: -2.11 + 'rem', marginRight: -2.11 + 'rem',}} pointing>
               <Menu.Item as={Link} to='/all-relations' name='scheme_all_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>获取所有关系</Menu.Item>
-              <Menu.Item as={Link} to='/query-by-concept' name='scheme_query_by_concept' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>根据概念获取关系</Menu.Item>
-              <Menu.Item as={Link} to='/add-relations' name='scheme_add_relations' active={activeItemNav === 'scheme_all_relations'} onClick={this.handleNavClick}>添加关系</Menu.Item>
+              <Menu.Item as={Link} to='/query-by-concept' name='scheme_query_by_concept' active={activeItemNav === 'scheme_query_by_concept'} onClick={this.handleNavClick}>根据概念获取关系</Menu.Item>
+              <Menu.Item as={Link} to='/add-relations' name='scheme_add_relations' active={activeItemNav === 'scheme_add_relations'} onClick={this.handleNavClick}>添加关系</Menu.Item>
 
 
               {/* <Menu.Menu position='right'>
