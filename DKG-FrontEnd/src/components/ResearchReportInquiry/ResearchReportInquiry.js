@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
-import Scheme from '../Scheme';
-import NamedEntityRecognition from '../NamedEntityRecognition';
 import 'semantic-ui-css/semantic.min.css';
-//import './style.css';
-import { Button, Icon, Input, Menu, Segment, Search, Form, Header, Modal, Table } from 'semantic-ui-react';
-// import { Pagination } from 'antd';
-// import 'antd/dist/antd.css';
-
-function htmlDecode(input){
-    var e = document.createElement('div');
-    e.innerHTML = input;
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-}
+import { Icon, Menu, Form, Modal, Table } from 'semantic-ui-react';
+import moment from 'moment/src/moment';
 
 //the component which deals with the selection of the table
 class MyRow extends React.Component {
@@ -42,6 +32,7 @@ class MyRow extends React.Component {
         console.log(data.id);
 
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
+        //const proxyurl = "http://cors.kaitohh.com/";
         const url = `http://cner.herokuapp.com/detail/${data.id}`
         fetch((proxyurl + url), {
             method: 'GET',
@@ -53,7 +44,7 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
-                  //  console.log(data);
+                    //  console.log(data);
                     this.setState({ Modal_content: data['content'] });
                 });
             }).catch((error) => {
@@ -65,6 +56,7 @@ class MyRow extends React.Component {
     showContent() {
         const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content, style_array } = this.state;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        //const proxyurl = "http://cors.kaitohh.com/";
         const url = `http://cner.herokuapp.com/single2`
         fetch((proxyurl + url), {
             method: 'POST',
@@ -78,7 +70,7 @@ class MyRow extends React.Component {
                 return response;
             }).then((response) => {
                 response.json().then((data) => {
-                  
+
                     //console.log(Modal_content);
                     console.log(data);
 
@@ -92,25 +84,25 @@ class MyRow extends React.Component {
                         result_text += fixed_content.slice(begin, value[0]);
                         let span = fixed_content.slice(value[0], value[1]);
                         // result_text.append(`<span className="${value[2]}">${span}</span>`);
-                        if(value[2] == 'ORG'){
+                        if (value[2] == 'ORG') {
                             result_text += `<span style="background-color: lightpink;">${span}</span>`;
-                        }else if(value[2] == 'PER'){
+                        } else if (value[2] == 'PER') {
                             result_text += `<span style="background-color: khaki;">${span}</span>`;
-                        }else if(value[2] == 'LOC'){
+                        } else if (value[2] == 'LOC') {
                             result_text += `<span style="background-color: paleturquoise;">${span}</span>`;
                         }
-                       
+
                         begin = value[1];
                     });
                     // result_text.append(fixed_content.slice(begin));
                     result_text += fixed_content.slice(begin);
                     console.log('12345678890' + result_text);
-                
-                   
+
+
                     // console.log(content);
 
                     this.setState({ style_array: data, Modal_content: result_text });
-               
+
                 });
             }).catch((error) => {
                 console.log(error);
@@ -121,32 +113,30 @@ class MyRow extends React.Component {
         const { Modal_id, Modal_title, Modal_date, Modal_url, Modal_content, style_array } = this.state;
         const { data, active } = this.props;
         return (
-            <Modal size="tiny" trigger={
+            <Modal style={{ marginTop: -40 + 'vh', marginBottom: 5 + 'vh', marginLeft: -32.5 + 'vh', }} size="small" trigger={
                 <Table.Row onClick={this.onClick} active={active}>
                     <Table.Cell>{data.id}</Table.Cell>
-                    <Table.Cell>{data.date}</Table.Cell>
-                    <Table.Cell >{data.code}</Table.Cell>
                     <Table.Cell >{data.title}</Table.Cell>
+                    <Table.Cell >{data.fullDeclareDate}</Table.Cell>
                 </Table.Row>
             }>
 
-                <Modal.Header>{Modal_title}</Modal.Header>
+                <Modal.Header>
+                    <h1>{Modal_title}</h1>
+                    <p>{Modal_date}</p>
+                    <a className="ui blue button" href={'http://www.cninfo.com.cn/' + Modal_url} target="_blank">下载公告</a>
+                    <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
+                </Modal.Header>
 
-                <Modal.Content className="modal" scrolling style={{ whiteSpace: 'pre-wrap' }}>
+                <Modal.Content scrolling style={{ whiteSpace: 'pre-wrap' }}>
                     <Modal.Description>
-                        <Header>{Modal_title}</Header>
-                        <p>{Modal_date}</p>
-                        <a className="ui blue button" href={'http://www.cninfo.com.cn/' + Modal_url} target="_blank">下载公告</a>
-                        <button className="ui green button" id="m-ner" onClick={this.showContent}>实体识别</button>
+                        {/* <Header>{Modal_title}</Header> */}
+                        <div dangerouslySetInnerHTML={{ __html: Modal_content }} />
                     </Modal.Description>
-                    <div dangerouslySetInnerHTML={{__html: Modal_content}} />
+                    {/* <div dangerouslySetInnerHTML={{ __html: Modal_content }} /> */}
                     {/* <div dangerouslySetInnerHTML={{__html: '<span style="background-color: lightpink;">王佳祺是天才</span>'}} /> */}
                     {/* this.state.Modal_content.map(function(value,index,array){<br>//代码片段<br>}.bind(this)) */}
                 </Modal.Content>
-
-                {/* <Modal.Actions>
-
-                </Modal.Actions> */}
 
             </Modal>
         );
@@ -185,7 +175,9 @@ export default class ResearchReportInquiry extends React.Component {
         const { allData, inputValue, activeRows, currentPage, start_date, end_date } = this.state;
         console.log(currentPage);
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${currentPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
+        //const proxyurl = "https://crossorigin.me/";
+        //const proxyurl = "http://cors.kaitohh.com/";
+        const url = `http://cner.herokuapp.com/query?query_table=report&code=${inputValue}&page=${currentPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
         fetch((proxyurl + url), {
             method: 'GET',
             // credentials: 'same-origin'    
@@ -198,8 +190,9 @@ export default class ResearchReportInquiry extends React.Component {
             }).then((response) => {
                 response.json().then((data) => {
                     for (let i = 0; i < data.length; i++) {
-                        let date = new Date(data[i]['date']);
-                        data[i]['date'] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+                        let temp = data[i]['fullDeclareDate']
+                        data[i]['fullDeclareDate'] = moment(temp).format('YYYY-MM-DD hh:mm:ss');
+                        console.log(data[i]['fullDeclareDate']);
                     }
                     console.log(data);
                     this.setState({ allData: data });
@@ -215,7 +208,7 @@ export default class ResearchReportInquiry extends React.Component {
             let newPage = currentPage - 1;
             this.setState({ currentPage: newPage });
             const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-            const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
+            const url = `http://cner.herokuapp.com/query?query_table=report&code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
             fetch((proxyurl + url), {
                 method: 'GET',
                 // credentials: 'same-origin'    
@@ -228,8 +221,9 @@ export default class ResearchReportInquiry extends React.Component {
                 }).then((response) => {
                     response.json().then((data) => {
                         for (let i = 0; i < data.length; i++) {
-                            let date = new Date(data[i]['date']);
-                            data[i]['date'] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+                            let temp = data[i]['fullDeclareDate']
+                            data[i]['fullDeclareDate'] = moment(temp).format('YYYY-MM-DD hh:mm:ss');
+                            console.log(data[i]['fullDeclareDate']);
                         }
                         console.log(data);
                         this.setState({ allData: data });
@@ -245,7 +239,7 @@ export default class ResearchReportInquiry extends React.Component {
         let newPage = currentPage + 1;
         this.setState({ currentPage: newPage });
         const proxyurl = "https://cors-anywhere.herokuapp.com/";  // could add Headers instead
-        const url = `http://cner.herokuapp.com/query?code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
+        const url = `http://cner.herokuapp.com/query?query_table=report&code=${inputValue}&page=${newPage}&limit=20&date_end=${end_date}&date_start=${start_date}`
         fetch((proxyurl + url), {
             method: 'GET',
             // credentials: 'same-origin'    
@@ -258,8 +252,9 @@ export default class ResearchReportInquiry extends React.Component {
             }).then((response) => {
                 response.json().then((data) => {
                     for (let i = 0; i < data.length; i++) {
-                        let date = new Date(data[i]['date']);
-                        data[i]['date'] = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+                        let temp = data[i]['fullDeclareDate']
+                        data[i]['fullDeclareDate'] = moment(temp).format('YYYY-MM-DD hh:mm:ss');
+                        console.log(data[i]['fullDeclareDate']);
                     }
                     console.log(data);
                     this.setState({ allData: data });

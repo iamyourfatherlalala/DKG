@@ -33,7 +33,7 @@ class HeaderDropdown extends Component {
         </DropdownToggle>
         <DropdownMenu right style={{ right: 'auto' }}>
           <DropdownItem header tag="div" className="text-center"><strong>账号</strong></DropdownItem>
-          <DropdownItem><i className="fa fa-user"></i> 个人资料</DropdownItem>
+          <DropdownItem><i className="fa fa-user"></i> 修改密码</DropdownItem>
           {/* <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
           <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
